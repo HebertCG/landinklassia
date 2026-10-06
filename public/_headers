@@ -11,5 +11,11 @@
 /robots.txt
   Cache-Control: public, max-age=3600
 
-/sitemap.xml
+/sitemap-index.xml
   Cache-Control: public, max-age=3600
+
+/sitemap-0.xml
+  Cache-Control: public, max-age=3600
+
+https://:worker.:account.workers.dev/*
+  X-Robots-Tag: noindex, nofollow

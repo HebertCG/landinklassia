@@ -30,32 +30,69 @@ const {
 } = Astro.props;
 const canonical = `${SITE}${path}`;
 const socialImage = new URL(image, SITE).href;
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+const organization = {
+  '@type': 'Organization',
+  '@id': `${SITE}/#organization`,
+  name: 'Klassia',
+  alternateName: 'klassia.lat',
+  url: `${SITE}/`,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE}/brand/klassia-mark-512.png`,
+    contentUrl: `${SITE}/brand/klassia-mark-512.png`,
+    width: 512,
+    height: 512
+  },
+  email: 'cornejogarciahebertjose@gmail.com',
+  areaServed: { '@type': 'Country', name: 'Perú' }
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: `${SITE}/`,
+  name: 'Klassia',
+  alternateName: 'klassia.lat',
+  inLanguage: 'es-PE',
+  publisher: { '@id': `${SITE}/#organization` }
+};
+
+const software = {
+  '@type': 'SoftwareApplication',
+  '@id': `${SITE}/#software`,
+  name: 'Klassia',
+  applicationCategory: 'EducationalApplication',
+  applicationSubCategory: 'Sistema de gestión académica',
+  operatingSystem: 'Web',
+  url: `${SITE}/`,
+  inLanguage: 'es-PE',
+  description: 'Plataforma de gestión académica para academias preuniversitarias: alumnos, horarios, asistencia, contenido, evaluaciones y reportes.',
+  provider: { '@id': `${SITE}/#organization` }
+};
+
+const webpage = {
+  '@type': schemaType,
+  '@id': `${canonical}#webpage`,
+  url: canonical,
+  name: title,
+  description,
+  inLanguage: 'es-PE',
+  isPartOf: { '@id': `${SITE}/#website` },
+  about: { '@id': `${SITE}/#software` },
+  primaryImageOfPage: {
+    '@type': 'ImageObject',
+    url: socialImage,
+    contentUrl: socialImage
+  }
+};
 
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [
-    {
-      '@type': 'Organization', '@id': `${SITE}/#organization`, name: 'Klassia', url: SITE,
-      logo: `${SITE}/brand/klassia-logo.svg`, email: 'cornejogarciahebertjose@gmail.com',
-      areaServed: { '@type': 'Country', name: 'Perú' }
-    },
-    {
-      '@type': 'WebSite', '@id': `${SITE}/#website`, url: SITE, name: 'Klassia', inLanguage: 'es-PE',
-      publisher: { '@id': `${SITE}/#organization` }
-    },
-    {
-      '@type': 'SoftwareApplication', '@id': `${SITE}/#software`, name: 'Klassia',
-      applicationCategory: 'EducationalApplication', applicationSubCategory: 'Sistema de gestión académica',
-      operatingSystem: 'Web', url: SITE, inLanguage: 'es-PE',
-      description: 'Plataforma de gestión académica para academias preuniversitarias: alumnos, horarios, asistencia, contenido, evaluaciones y reportes.',
-      provider: { '@id': `${SITE}/#organization` }
-    },
-    {
-      '@type': schemaType, '@id': `${canonical}#webpage`, url: canonical, name: title, description,
-      inLanguage: 'es-PE', isPartOf: { '@id': `${SITE}/#website` },
-      about: { '@id': `${SITE}/#software` },
-      primaryImageOfPage: { '@type': 'ImageObject', url: socialImage }
-    },
+    ...(path === '/' ? [organization, website, software] : []),
+    webpage,
     ...(path === '/' ? [] : [{
       '@type': 'BreadcrumbList',
       itemListElement: [
@@ -68,12 +105,13 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es-PE">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {googleSiteVerification && <meta name="google-site-verification" content={googleSiteVerification} />}
     <meta name="theme-color" content="#1769ff" />
     <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'} />
     <link rel="canonical" href={canonical} />
@@ -97,6 +135,8 @@ const schema = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:secure_url" content={socialImage} />
+    <meta property="og:image:type" content="image/webp" />
     <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:image:width" content="1600" />
     <meta property="og:image:height" content="858" />
