@@ -1,0 +1,120 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Icon from '../../components/Icon.astro';
+import Shot from '../../components/Shot.astro';
+import { modules } from '../../data/modules';
+---
+
+<MarketingLayout
+  title="Plataforma de gestión académica para academias | Klassia"
+  description="Los seis módulos de Klassia: gestión académica, horarios y asistencia, contenido y tareas, evaluaciones, Klassia en vivo y reportes."
+  active="platform"
+  path="/plataforma/"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a>
+        <Icon name="arrow" size={12} />
+        <span>Plataforma</span>
+      </nav>
+
+      <div class="sub-hero-copy centered">
+        <p class="eyebrow">La plataforma completa</p>
+        <h1>De la matrícula al resultado, <em>sin cambiar de sistema.</em></h1>
+        <p class="lead">
+          Una plataforma no es una colección de pantallas. Es un flujo que conserva el contexto de un
+          módulo al siguiente. Estos son los seis que sostienen el ciclo de una academia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="module-grid" style="margin-top: 0;">
+        {
+          modules.map((item) => (
+            <article class={`module-card tone-${item.tone}`}>
+              <span class="module-icon">
+                <Icon name={item.icon} size={22} />
+              </span>
+              <p class="eyebrow">{item.eyebrow}</p>
+              <h2 style="font-size: var(--t-h3);">{item.name}</h2>
+              <p>{item.tagline}</p>
+              <ul class="module-points">
+                {item.bullets.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+              <a class="text-link" href={`/plataforma/${item.slug}/`}>
+                Ver el módulo <Icon name="arrow" size={15} />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--page);">
+    <div class="container">
+      <div class="section-head centered">
+        <p class="eyebrow">Cómo encaja todo</p>
+        <h2>El recorrido de un ciclo, <em>de principio a fin.</em></h2>
+      </div>
+
+      <div style="margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);">
+        {
+          modules.map((item) => (
+            <div class="feature-row">
+              <div class="feature-copy">
+                <p class="eyebrow">{item.eyebrow}</p>
+                <h3>{item.name}</h3>
+                <p>{item.summary}</p>
+                <ul class="feature-list">
+                  {item.capabilities.slice(0, 3).map((capability) => (
+                    <li>
+                      <Icon name="check" size={18} />
+                      <span>
+                        <b>{capability.title}.</b> {capability.text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <a class="text-link" href={`/plataforma/${item.slug}/`}>
+                  Ver {item.name.toLowerCase()} <Icon name="arrow" size={15} />
+                </a>
+              </div>
+              <Shot
+                shot={item.shot}
+                alt={item.shotAlt}
+                width={item.shotWidth}
+                height={item.shotHeight}
+                chrome={item.shot !== 'klassia-en-vivo'}
+              />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">Una demostración, no un catálogo</p>
+          <h2>Te mostramos solo los módulos que tu academia usaría.</h2>
+          <p>
+            Cuéntanos cómo trabajas hoy y armamos la demo alrededor de eso: tus ciclos, tus grupos y
+            tus cursos.
+          </p>
+        </div>
+        <a class="button button-lime" href="/#demo">
+          Solicitar demostración <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

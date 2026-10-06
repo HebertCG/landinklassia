@@ -1,0 +1,131 @@
+---
+import MarketingLayout from '../../layouts/MarketingLayout.astro';
+import Icon from '../../components/Icon.astro';
+import Shot from '../../components/Shot.astro';
+import { modules } from '../../data/modules';
+
+export function getStaticPaths() {
+  return modules.map((item, index) => ({
+    params: { slug: item.slug },
+    props: {
+      module: item,
+      // .at(-1) wraps to the last module, so the pager is circular.
+      prev: modules.at(index - 1) ?? item,
+      next: modules.at((index + 1) % modules.length) ?? item
+    }
+  }));
+}
+
+const { module, prev, next } = Astro.props;
+---
+
+<MarketingLayout
+  title={`${module.name} | Plataforma Klassia`}
+  description={module.summary}
+  active="platform"
+  path={`/plataforma/${module.slug}/`}
+>
+  <section class={`sub-hero tone-${module.tone}`}>
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a>
+        <Icon name="arrow" size={12} />
+        <a href="/plataforma/">Plataforma</a>
+        <Icon name="arrow" size={12} />
+        <span>{module.name}</span>
+      </nav>
+
+      <div class="sub-hero-copy">
+        <p class="module-badge">
+          <span><Icon name={module.icon} size={17} /></span>
+          {module.eyebrow}
+        </p>
+        <h1>{module.headline}</h1>
+        <p class="lead">{module.summary}</p>
+        <div class="hero-actions" style="justify-content: flex-start;">
+          <a class="button button-primary" href="/#demo">Verlo en una demo</a>
+          <a class="button button-ghost" href="/plataforma/">Todos los módulos</a>
+        </div>
+      </div>
+
+      <div class="hero-shot" style="margin-inline: 0; max-width: none;">
+        <Shot
+          shot={module.shot}
+          alt={module.shotAlt}
+          width={module.shotWidth}
+          height={module.shotHeight}
+          sizes="(max-width: 1240px) 100vw, 1200px"
+          eager
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Qué incluye</p>
+        <h2>Lo que este módulo resuelve.</h2>
+      </div>
+
+      <div class="capability-grid" style="margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);">
+        {
+          module.capabilities.map((capability) => (
+            <article class="capability">
+              <b>{capability.title}</b>
+              <p>{capability.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="background: var(--page);">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Lo que deja de hacerse a mano</p>
+        <h2>Trabajo que desaparece.</h2>
+      </div>
+      <ul class="replaces">
+        {
+          module.replaces.map((item) => (
+            <li>
+              <Icon name="close" size={15} />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">Siguiente paso</p>
+          <h2>¿Quieres ver {module.name.toLowerCase()} con tus propios datos?</h2>
+          <p>
+            Te mostramos el módulo funcionando con el contexto de tu academia: tus ciclos, tus grupos
+            y tus cursos.
+          </p>
+        </div>
+        <a class="button button-lime" href="/#demo">
+          Solicitar demostración <Icon name="arrow" size={16} />
+        </a>
+      </div>
+
+      <nav class="module-nav" aria-label="Otros módulos">
+        <a href={`/plataforma/${prev.slug}/`}>
+          <small>Módulo anterior</small>
+          <b>{prev.name}</b>
+        </a>
+        <a class="next" href={`/plataforma/${next.slug}/`}>
+          <small>Módulo siguiente</small>
+          <b>{next.name}</b>
+        </a>
+      </nav>
+    </div>
+  </section>
+</MarketingLayout>

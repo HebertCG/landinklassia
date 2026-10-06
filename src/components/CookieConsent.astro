@@ -1,0 +1,94 @@
+<div class="cookie-banner" data-cookie-banner hidden aria-label="Preferencias de privacidad">
+  <div>
+    <strong>Tu privacidad, primero</strong>
+    <p>
+      Usamos almacenamiento esencial para recordar tus preferencias. Las cookies opcionales solo se
+      activarán si las autorizas. <a href="/cookies/">Ver política de cookies</a>.
+    </p>
+  </div>
+  <div class="cookie-actions">
+    <button class="button cookie-secondary" type="button" data-cookie-reject>Solo necesarias</button>
+    <button class="button cookie-secondary" type="button" data-cookie-settings>Configurar</button>
+    <button class="button button-primary" type="button" data-cookie-accept>Aceptar opcionales</button>
+  </div>
+</div>
+
+<dialog class="cookie-dialog" data-cookie-dialog aria-labelledby="cookie-title">
+  <form method="dialog">
+    <div class="cookie-dialog-head">
+      <div>
+        <p class="eyebrow">Centro de privacidad</p>
+        <h2 id="cookie-title">Configura tus cookies</h2>
+      </div>
+      <button class="cookie-close" value="cancel" aria-label="Cerrar preferencias">×</button>
+    </div>
+    <p>
+      Puedes cambiar esta decisión en cualquier momento desde el enlace “Preferencias de cookies”
+      del pie de página.
+    </p>
+    <div class="cookie-option">
+      <span><b>Necesarias</b><small>Permiten recordar tu elección y mantener funciones básicas.</small></span>
+      <span class="cookie-always">Siempre activas</span>
+    </div>
+    <label class="cookie-option">
+      <span><b>Analítica</b><small>Ayudaría a entender el uso del sitio mediante mediciones agregadas.</small></span>
+      <input type="checkbox" name="analytics" data-cookie-analytics />
+    </label>
+    <label class="cookie-option">
+      <span><b>Preferencias</b><small>Recordaría opciones adicionales para personalizar la experiencia.</small></span>
+      <input type="checkbox" name="preferences" data-cookie-preferences />
+    </label>
+    <div class="cookie-dialog-actions">
+      <button class="button cookie-secondary" value="cancel">Cancelar</button>
+      <button class="button button-primary" value="save" data-cookie-save>Guardar preferencias</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  type Consent = { essential: true; analytics: boolean; preferences: boolean; updatedAt: string };
+  const consentKey = 'klassia-cookie-consent-v1';
+  const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+  const dialog = document.querySelector<HTMLDialogElement>('[data-cookie-dialog]');
+  const analytics = document.querySelector<HTMLInputElement>('[data-cookie-analytics]');
+  const preferences = document.querySelector<HTMLInputElement>('[data-cookie-preferences]');
+
+  const readConsent = (): Consent | null => {
+    try {
+      const value = localStorage.getItem(consentKey);
+      return value ? JSON.parse(value) : null;
+    } catch {
+      return null;
+    }
+  };
+
+  const saveConsent = (next: Omit<Consent, 'essential' | 'updatedAt'>) => {
+    const value: Consent = { essential: true, ...next, updatedAt: new Date().toISOString() };
+    localStorage.setItem(consentKey, JSON.stringify(value));
+    banner?.setAttribute('hidden', '');
+    window.dispatchEvent(new CustomEvent('klassia:consent', { detail: value }));
+  };
+
+  const openSettings = () => {
+    const current = readConsent();
+    if (analytics) analytics.checked = current?.analytics ?? false;
+    if (preferences) preferences.checked = current?.preferences ?? false;
+    dialog?.showModal();
+  };
+
+  if (!readConsent()) banner?.removeAttribute('hidden');
+  document.querySelector('[data-cookie-accept]')?.addEventListener('click', () =>
+    saveConsent({ analytics: true, preferences: true })
+  );
+  document.querySelector('[data-cookie-reject]')?.addEventListener('click', () =>
+    saveConsent({ analytics: false, preferences: false })
+  );
+  document.querySelectorAll('[data-cookie-settings]').forEach((button) =>
+    button.addEventListener('click', openSettings)
+  );
+  document.querySelector('[data-cookie-save]')?.addEventListener('click', (event) => {
+    event.preventDefault();
+    saveConsent({ analytics: analytics?.checked ?? false, preferences: preferences?.checked ?? false });
+    dialog?.close();
+  });
+</script>

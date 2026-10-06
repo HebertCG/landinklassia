@@ -1,0 +1,32 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  eyebrow: string;
+  heading: string;
+  intro: string;
+}
+
+const { title, description, path, eyebrow, heading, intro } = Astro.props;
+---
+
+<MarketingLayout {title} {description} {path}>
+  <section class="legal-hero">
+    <div class="container legal-shell">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a><Icon name="arrow" size={12} /><span>{eyebrow}</span>
+      </nav>
+      <p class="eyebrow">{eyebrow}</p>
+      <h1>{heading}</h1>
+      <p class="lead">{intro}</p>
+      <p class="legal-updated">Última actualización: 6 de octubre de 2026</p>
+    </div>
+  </section>
+  <section class="section-tight">
+    <article class="container legal-shell legal-content"><slot /></article>
+  </section>
+</MarketingLayout>

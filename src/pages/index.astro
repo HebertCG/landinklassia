@@ -1,0 +1,401 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from '../components/Icon.astro';
+import Shot from '../components/Shot.astro';
+import { modules } from '../data/modules';
+
+const roles = [
+  {
+    eyebrow: 'Administración',
+    title: 'La academia completa, sin perder el pulso.',
+    text: 'Coordinación ve matrículas, grupos, horarios, asistencia y rendimiento en una sola lectura, sin pedirle un archivo a nadie.',
+    points: [
+      ['Padrón siempre al día', 'Importa el ciclo por CSV y gestiona traslados sin rehacer listas.'],
+      ['Operación del día', 'Qué clases hay hoy, quién asistió y qué está pendiente de revisar.'],
+      ['Decisiones con contexto', 'Promedios, asistencia y entregas que salen del sistema, no de un consolidado manual.']
+    ],
+    shot: 'dashboard-admin',
+    alt: 'Panel de administración de Klassia con alumnos activos, asistencia del día, entregas por revisar y clases de hoy',
+    w: 2960,
+    h: 1472
+  },
+  {
+    eyebrow: 'Docentes',
+    title: 'Menos fricción entre enseñar y evaluar.',
+    text: 'El docente entra a sus grupos y encuentra todo lo que necesita para la clase que empieza en veinticinco minutos.',
+    points: [
+      ['Sus cursos, no el sistema entero', 'Solo los grupos que dicta, con la siguiente clase siempre a la vista.'],
+      ['Material y tareas por curso', 'Publica separatas, asigna entregas y revisa desde una sola bandeja.'],
+      ['Evaluar sin rehacer', 'Exámenes con fórmulas e imágenes, e importación del banco que ya tiene en Word.']
+    ],
+    shot: 'panel-docente',
+    alt: 'Panel del docente en Klassia con sus cursos, siguiente clase, rendimiento por curso y pendientes de la semana',
+    w: 2960,
+    h: 1408
+  },
+  {
+    eyebrow: 'Estudiantes',
+    title: 'Todo lo importante, sin tener que buscarlo.',
+    text: 'El alumno abre Klassia y sabe qué toca ahora, qué debe entregar y cómo va. En el celular y en la computadora.',
+    points: [
+      ['Su día, resuelto', 'Siguiente clase, horario completo y pendientes del día al entrar.'],
+      ['Material donde lo espera', 'Las separatas están en su curso, no perdidas en un chat.'],
+      ['Su propio avance', 'Notas por curso, asistencia del ciclo y la próxima evaluación.']
+    ],
+    shot: 'panel-alumno',
+    alt: 'Panel del estudiante en Klassia con su siguiente clase, tareas pendientes, notas por curso y asistencia del ciclo',
+    w: 2960,
+    h: 1536
+  }
+];
+---
+
+<MarketingLayout
+  title="Klassia | Software para academias preuniversitarias"
+  description="Klassia reúne alumnos, horarios, asistencia, materiales, tareas, evaluaciones y reportes en una plataforma hecha para academias preuniversitarias."
+  path="/"
+>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="container hero-copy">
+      <h1>Todo tu sistema académico, <em>finalmente conectado.</em></h1>
+      <p class="hero-lead">
+        La operación, la enseñanza y el seguimiento del estudiante en una sola plataforma.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#demo">Solicitar una demostración</a>
+        <a class="button button-ghost" href="/plataforma/">Ver la plataforma</a>
+      </div>
+      <div class="hero-proof">
+        <span><Icon name="check" size={16} />6 módulos conectados</span>
+        <span><Icon name="check" size={16} />3 experiencias por rol</span>
+        <span><Icon name="check" size={16} />Datos aislados por academia</span>
+      </div>
+    </div>
+
+    <!-- Decorative fragments of the real product UI. -->
+    <div class="collage" aria-hidden="true">
+      <div class="frag f-attendance">
+        <div class="frag-head"><b>Asistencia · UNI 01</b><span>4:00 p. m.</span></div>
+        <div class="row"><span class="dot a1">CM</span><b>Camila Mendoza</b><span class="chip chip-green">Presente</span></div>
+        <div class="row"><span class="dot a4">SF</span><b>Sebastián Flores</b><span class="chip chip-green">Presente</span></div>
+        <div class="row"><span class="dot a2">AO</span><b>Alonso Ortega</b><span class="chip chip-yellow">Tarde</span></div>
+      </div>
+
+      <div class="frag f-schedule">
+        <div class="frag-head"><b>Horario de hoy</b><span>4 clases</span></div>
+        <div class="slot">
+          <time>4:00</time><i style="background: var(--blue)"></i>
+          <span><b>Álgebra</b><small>Aula 03</small></span>
+        </div>
+        <div class="slot">
+          <time>6:00</time><i style="background: var(--coral)"></i>
+          <span><b>Historia</b><small>Aula 04</small></span>
+        </div>
+      </div>
+
+      <div class="frag f-avatars">
+        <span class="stack">
+          <span class="dot a1">CM</span><span class="dot a3">VS</span><span class="dot a5">LC</span><span class="dot a6">RT</span>
+        </span>
+        <em>+28 en clase</em>
+      </div>
+
+      <div class="frag f-grades">
+        <div class="frag-head"><b>Notas por curso</b><span>17.4</span></div>
+        <div class="bar"><u>Álgebra</u><span class="track"><i style="width: 95%"></i></span><em>19.0</em></div>
+        <div class="bar"><u>Física</u><span class="track"><i style="width: 85%"></i></span><em>17.0</em></div>
+        <div class="bar"><u>R. Verbal</u><span class="track"><i style="width: 81%"></i></span><em>16.2</em></div>
+      </div>
+
+      <div class="frag f-kpi">
+        <span class="kpi-icon"><Icon name="file" size={15} /></span>
+        <span><b>18 entregas</b><small>por revisar en 4 cursos</small></span>
+      </div>
+
+      <div class="frag f-menu">
+        <div class="item on"><span><Icon name="chart" size={13} /></span>Panel</div>
+        <div class="item"><span><Icon name="users" size={13} /></span>Alumnos</div>
+        <div class="item"><span><Icon name="calendar" size={13} /></span>Horarios</div>
+        <div class="item"><span><Icon name="file" size={13} /></span>Contenido</div>
+      </div>
+
+      <div class="frag f-chart">
+        <div class="frag-head"><b>Asistencia de la semana</b><span>91%</span></div>
+        <div class="bars">
+          <i style="height: 62%"></i><i style="height: 78%"></i><i style="height: 69%"></i>
+          <i style="height: 91%"></i><i style="height: 84%"></i><i style="height: 96%"></i>
+        </div>
+        <div class="labels">
+          <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span>
+        </div>
+      </div>
+
+      <div class="frag f-live">
+        <span class="pin"><small>Klassia en vivo</small><b>482 913</b></span>
+        <span class="live-dot"><i></i>28 conectados</span>
+      </div>
+
+      <div class="frag f-notify">
+        <span class="dot a6">MR</span>
+        <span><b>Marco Rojas</b><small>publicó el examen parcial de Física</small></span>
+      </div>
+
+      <span class="tile tile-blue t-one"><Icon name="calendar" size={26} /></span>
+      <span class="tile tile-lime t-two"><Icon name="spark" size={26} /></span>
+      <span class="tile tile-violet t-three"><Icon name="edit" size={26} /></span>
+      <span class="tile tile-coral t-four"><Icon name="file" size={26} /></span>
+    </div>
+  </section>
+
+  <!-- ============ STRIP ============ -->
+  <section class="strip" aria-label="Perfiles que usan Klassia">
+    <div class="container strip-row">
+      <p>Una sola plataforma para</p>
+      <b><Icon name="users" size={17} />Administración</b>
+      <b><Icon name="edit" size={17} />Docentes</b>
+      <b><Icon name="file" size={17} />Estudiantes</b>
+    </div>
+  </section>
+
+  <!-- ============ PROBLEM ============ -->
+  <section class="section glow">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">El problema real</p>
+          <h3>La información existe. El problema es que vive en seis lugares distintos.</h3>
+          <p>
+            El padrón está en una hoja de cálculo, la asistencia en un cuaderno, las separatas en un
+            grupo de WhatsApp y las notas en otro archivo. Cada vez que alguien necesita entender
+            cómo va un alumno, hay que reconstruir su historia a mano.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Se registra una sola vez.</b> El dato entra al sistema y acompaña al alumno todo
+                el ciclo.</span
+              >
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Todo comparte contexto.</b> Alumno, grupo, curso y ciclo son los mismos en cada
+                módulo.</span
+              >
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Nadie reconstruye nada.</b> El reporte del ciclo sale del sistema, no de juntar
+                archivos.</span
+              >
+            </li>
+          </ul>
+        </div>
+        <figure class="story-photo">
+          <picture>
+            <source media="(max-width: 700px)" srcset="/brand/klassia-students-800.webp" />
+            <img
+              src="/brand/klassia-students-1600.webp"
+              width="1600"
+              height="858"
+              alt="Estudiantes y docente trabajando juntos en el aula de una academia"
+              loading="lazy"
+            />
+          </picture>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODULES ============ -->
+  <section class="section" id="plataforma" style="background: var(--page);">
+    <div class="container">
+      <div class="section-head centered">
+        <p class="eyebrow">La plataforma</p>
+        <h2>Seis módulos. <em>Una sola fuente de verdad.</em></h2>
+        <p class="lead">
+          Cada módulo resuelve una parte del ciclo y comparte el mismo contexto con los demás. Entra
+          a cualquiera para ver cómo funciona por dentro.
+        </p>
+      </div>
+
+      <div class="module-grid">
+        {
+          modules.map((item) => (
+            <article class={`module-card tone-${item.tone}`}>
+              <span class="module-icon">
+                <Icon name={item.icon} size={22} />
+              </span>
+              <p class="eyebrow">{item.eyebrow}</p>
+              <h3>{item.name}</h3>
+              <p>{item.tagline}</p>
+              <ul class="module-points">
+                {item.bullets.map((point) => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+              <a class="text-link" href={`/plataforma/${item.slug}/`}>
+                Ver el módulo <Icon name="arrow" size={15} />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROLES ============ -->
+  <section class="section glow">
+    <div class="container">
+      <div class="section-head centered">
+        <p class="eyebrow">Una vista para cada persona</p>
+        <h2>La misma información. <em>La experiencia correcta.</em></h2>
+        <p class="lead">
+          Nadie debería aprender a usar el sistema entero para hacer su parte. Cada rol entra a lo
+          que necesita.
+        </p>
+      </div>
+
+      <div style="margin-top: clamp(3rem, 2rem + 3vw, 5rem);">
+        {
+          roles.map((role) => (
+            <div class="feature-row">
+              <div class="feature-copy">
+                <p class="eyebrow">{role.eyebrow}</p>
+                <h3>{role.title}</h3>
+                <p>{role.text}</p>
+                <ul class="feature-list">
+                  {role.points.map(([title, text]) => (
+                    <li>
+                      <Icon name="check" size={18} />
+                      <span>
+                        <b>{title}.</b> {text}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Shot shot={role.shot} alt={role.alt} width={role.w} height={role.h} />
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPARISON TEASER ============ -->
+  <section class="section band">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow eyebrow-light">Por qué Klassia</p>
+        <h2>No es un software de colegio <em>adaptado a la fuerza.</em></h2>
+        <p class="lead">
+          Una academia preuniversitaria trabaja por ciclos cortos, agrupa por universidad objetivo y
+          recibe alumnos egresados. Los sistemas pensados para colegios tratan todo eso como una
+          excepción. Klassia lo trata como el caso normal.
+        </p>
+      </div>
+
+      <div class="stats" style="margin-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);">
+        <div class="stat">
+          <b>6</b>
+          <strong>Módulos conectados</strong>
+          <p>De la matrícula al reporte final, sin saltar entre herramientas.</p>
+        </div>
+        <div class="stat">
+          <b>3</b>
+          <strong>Roles con vista propia</strong>
+          <p>Administración, docentes y estudiantes ven lo que les toca.</p>
+        </div>
+        <div class="stat">
+          <b>1</b>
+          <strong>Espacio por academia</strong>
+          <p>Subdominio propio, identidad configurable y datos aislados.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2.5rem;">
+        <a class="button button-white" href="/comparativa/">
+          Ver la comparativa completa <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LIVE ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">Klassia en vivo</p>
+          <h3>El repaso que la clase sí quiere hacer.</h3>
+          <p>
+            Proyecta un PIN, los alumnos entran desde su celular y responden contra reloj. El docente
+            ve en qué se equivocan antes de explicar, y la tabla de posiciones mantiene al grupo
+            despierto hasta el final.
+          </p>
+          <a class="text-link" href="/plataforma/klassia-en-vivo/">
+            Ver cómo funciona <Icon name="arrow" size={15} />
+          </a>
+        </div>
+        <Shot
+          shot="klassia-en-vivo"
+          alt="Sesión de Klassia en vivo con PIN de acceso, pregunta proyectada, tabla de posiciones y respuestas en tiempo real"
+          width={2960}
+          height={1352}
+          chrome={false}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECURITY ============ -->
+  <section class="section-tight" style="background: var(--page);">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">Datos separados, acceso controlado</p>
+          <h3>La información de cada academia permanece en su propio contexto.</h3>
+          <p>
+            Cada organización opera en su propio subdominio y sus consultas conservan el contexto
+            institucional. Los roles definen qué puede ver y hacer cada persona.
+          </p>
+          <a class="text-link" href="/seguridad/">
+            Cómo protegemos los datos <Icon name="arrow" size={15} />
+          </a>
+        </div>
+        <ul class="replaces" style="align-content: start;">
+          <li><Icon name="layers" size={16} />Arquitectura multitenant</li>
+          <li><Icon name="lock" size={16} />Roles y permisos</li>
+          <li><Icon name="shield" size={16} />Registro de auditoría</li>
+          <li><Icon name="file" size={16} />Archivos privados</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">Conoce el sistema por dentro</p>
+          <h2>Tu academia ya tiene un método. Klassia ayuda a conectarlo.</h2>
+          <p>
+            Agenda una demostración guiada con los módulos que realmente usaría tu equipo. Te
+            mostramos Klassia con el contexto de tu academia, no con una cuenta de ejemplo.
+          </p>
+        </div>
+        <a
+          class="button button-lime"
+          href="mailto:cornejogarciahebertjose@gmail.com?subject=Quiero%20una%20demo%20de%20Klassia"
+        >
+          Solicitar demostración <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

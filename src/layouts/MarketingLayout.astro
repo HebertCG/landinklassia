@@ -1,0 +1,115 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  active?: 'platform' | 'academies' | 'comparison' | 'security';
+  /** Path with leading and trailing slash, e.g. /plataforma/ */
+  path: string;
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  schemaType?: 'WebPage' | 'AboutPage';
+}
+
+const SITE = 'https://klassia.lat';
+const {
+  title,
+  description,
+  active,
+  path,
+  image = '/brand/klassia-students-1600.webp',
+  imageAlt = 'Estudiantes usando Klassia en una academia preuniversitaria',
+  noindex = false,
+  schemaType = 'WebPage'
+} = Astro.props;
+const canonical = `${SITE}${path}`;
+const socialImage = new URL(image, SITE).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization', '@id': `${SITE}/#organization`, name: 'Klassia', url: SITE,
+      logo: `${SITE}/brand/klassia-logo.svg`, email: 'cornejogarciahebertjose@gmail.com',
+      areaServed: { '@type': 'Country', name: 'Perú' }
+    },
+    {
+      '@type': 'WebSite', '@id': `${SITE}/#website`, url: SITE, name: 'Klassia', inLanguage: 'es-PE',
+      publisher: { '@id': `${SITE}/#organization` }
+    },
+    {
+      '@type': 'SoftwareApplication', '@id': `${SITE}/#software`, name: 'Klassia',
+      applicationCategory: 'EducationalApplication', applicationSubCategory: 'Sistema de gestión académica',
+      operatingSystem: 'Web', url: SITE, inLanguage: 'es-PE',
+      description: 'Plataforma de gestión académica para academias preuniversitarias: alumnos, horarios, asistencia, contenido, evaluaciones y reportes.',
+      provider: { '@id': `${SITE}/#organization` }
+    },
+    {
+      '@type': schemaType, '@id': `${canonical}#webpage`, url: canonical, name: title, description,
+      inLanguage: 'es-PE', isPartOf: { '@id': `${SITE}/#website` },
+      about: { '@id': `${SITE}/#software` },
+      primaryImageOfPage: { '@type': 'ImageObject', url: socialImage }
+    },
+    ...(path === '/' ? [] : [{
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Inicio', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: title.replace(/\s*\|.*$/, ''), item: canonical }
+      ]
+    }])
+  ]
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1769ff" />
+    <meta name="robots" content={noindex ? 'noindex,follow' : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1'} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es-PE" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="icon" href="/brand/klassia-logo.svg" type="image/svg+xml" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="preload"
+      href="/brand/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_PE" />
+    <meta property="og:site_name" content="Klassia" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta property="og:image:width" content="1600" />
+    <meta property="og:image:height" content="858" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader active={active} />
+    <main id="contenido"><slot /></main>
+    <SiteFooter />
+    <CookieConsent />
+  </body>
+</html>

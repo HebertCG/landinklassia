@@ -1,0 +1,56 @@
+---
+
+interface Props {
+  /** Base filename in /public/product, without extension */
+  shot: string;
+  alt: string;
+  width: number;
+  height: number;
+  /** Rendered CSS width hint for the browser's srcset choice */
+  sizes?: string;
+  /** Only the hero screenshot should be eager */
+  eager?: boolean;
+  /** Draw the browser chrome around the screenshot */
+  chrome?: boolean;
+  /** Present a mobile screenshot inside a phone frame */
+  phone?: boolean;
+  caption?: string;
+}
+
+const {
+  shot,
+  alt,
+  width,
+  height,
+  sizes = '(max-width: 900px) 100vw, 1060px',
+  eager = false,
+  chrome = true,
+  phone = false,
+  caption
+} = Astro.props;
+
+const half = Math.round(width / 2);
+---
+
+<figure class:list={['shot', chrome && 'shot-chrome', phone && 'shot-phone']}>
+  {
+    chrome && (
+      <div class="shot-bar" aria-hidden="true">
+        <span class="shot-dots"><i /><i /><i /></span>
+        <span class="shot-url">academia.klassia.lat</span>
+      </div>
+    )
+  }
+  <img
+    src={`/product/${shot}-1x.webp`}
+    srcset={`/product/${shot}-1x.webp ${half}w, /product/${shot}.webp ${width}w`}
+    sizes={sizes}
+    width={half}
+    height={Math.round(height / 2)}
+    alt={alt}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding={eager ? 'sync' : 'async'}
+    fetchpriority={eager ? 'high' : 'auto'}
+  />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

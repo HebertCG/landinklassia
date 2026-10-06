@@ -1,0 +1,199 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from '../components/Icon.astro';
+import Shot from '../components/Shot.astro';
+import { alternatives, comparisonRows, supportLabel } from '../data/comparison';
+import type { Support } from '../data/comparison';
+
+const markIcon: Record<Support, string> = {
+  full: 'check',
+  partial: 'minus',
+  none: 'close'
+};
+
+const columns = [
+  { key: 'klassia', label: 'Klassia' },
+  { key: 'spreadsheets', label: 'Hojas de cálculo y chats' },
+  { key: 'genericLms', label: 'LMS genérico' },
+  { key: 'schoolErp', label: 'ERP escolar' }
+] as const;
+---
+
+<MarketingLayout
+  title="Klassia vs. Excel, LMS y ERP escolar | Comparativa"
+  description="Cómo se compara Klassia frente a hojas de cálculo, un LMS genérico y un ERP escolar para una academia preuniversitaria."
+  active="comparison"
+  path="/comparativa/"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a>
+        <Icon name="arrow" size={12} />
+        <span>Comparativa</span>
+      </nav>
+
+      <div class="sub-hero-copy centered">
+        <p class="eyebrow">Comparativa honesta</p>
+        <h1>Qué cambia cuando el sistema <em>entiende tu ciclo.</em></h1>
+        <p class="lead">
+          Casi toda academia ya resuelve su operación con algo. La pregunta no es si funciona, sino
+          cuánto trabajo manual cuesta sostenerlo. Esto es lo que hace Klassia distinto frente a las
+          tres alternativas más comunes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Con qué comparamos</p>
+        <h2>Las tres alternativas que de verdad se usan.</h2>
+        <p class="lead">
+          Comparamos contra categorías de herramienta, no contra productos concretos. Cada columna
+          describe cómo se comporta típicamente ese tipo de solución en una academia preuniversitaria.
+        </p>
+      </div>
+
+      <div class="alt-grid">
+        {
+          alternatives.map((item) => (
+            <article class="alt-card">
+              <h3>{item.name}</h3>
+              <p>{item.what}</p>
+              <p class="limit">
+                <Icon name="close" size={16} />
+                <span>{item.limit}</span>
+              </p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--page);">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Punto por punto</p>
+        <h2>Lo que cada opción resuelve <em>y lo que deja fuera.</em></h2>
+      </div>
+
+      <div class="table-scroll">
+        <table class="compare">
+          <caption>
+            Sí: lo resuelve de forma nativa. Parcial: se puede lograr con trabajo manual o
+            configuración forzada. No: no está contemplado. Las columnas de alternativas describen el
+            comportamiento habitual de esa categoría de herramienta, no el de un producto concreto.
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Necesidad de la academia</th>
+              <th scope="col" class="col-klassia">Klassia</th>
+              <th scope="col">Hojas de cálculo y chats</th>
+              <th scope="col">LMS genérico</th>
+              <th scope="col">ERP escolar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              comparisonRows.map((row) => (
+                <tr>
+                  <th scope="row">
+                    {row.feature}
+                    <small>{row.detail}</small>
+                  </th>
+                  {columns.map((column) => (
+                    <td
+                      class:list={[column.key === 'klassia' && 'col-klassia']}
+                      data-label={column.label}
+                    >
+                      <span class={`mark mark-${row[column.key]}`}>
+                        <Icon name={markIcon[row[column.key]]} size={15} />
+                      </span>
+                      <span class="sr-only">{supportLabel[row[column.key]]}</span>
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">La diferencia en una pantalla</p>
+          <h3>El consolidado del ciclo no se arma: ya está hecho.</h3>
+          <p>
+            Esta es la prueba más clara. En una hoja de cálculo, este reporte cuesta una tarde de
+            trabajo y queda desactualizado al día siguiente. En Klassia es la consecuencia natural de
+            que la asistencia, las notas y las entregas vivan en el mismo sitio.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>Sin copiar y pegar.</b> Los datos ya están donde tienen que estar.</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>Sin versiones.</b> No hay un archivo "final_v3" circulando por correo.</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>A mitad del ciclo.</b> No hay que esperar al cierre para reaccionar.</span>
+            </li>
+          </ul>
+        </div>
+        <Shot
+          shot="reportes"
+          alt="Reportes académicos de Klassia con promedio general, evolución por curso, distribución de notas y ranking por grupo"
+          width={2960}
+          height={1256}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow eyebrow-light">Para ser justos</p>
+        <h2>Klassia no es la respuesta para todo el mundo.</h2>
+        <p class="lead">
+          Si administras un colegio regular con año escolar, bimestres, libretas oficiales y nómina
+          docente, un ERP escolar te va a servir mejor. Si vendes cursos en línea a público abierto,
+          un LMS genérico está más cerca de lo que necesitas.
+        </p>
+        <p class="lead">
+          Klassia está construida para un caso concreto: la academia preuniversitaria que trabaja por
+          ciclos, agrupa por universidad objetivo y necesita que la operación diaria y el seguimiento
+          del alumno vivan juntos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">Compruébalo tú</p>
+          <h2>Tráenos tu caso más difícil.</h2>
+          <p>
+            El traslado a mitad de ciclo, el alumno egresado, el grupo que cambia de horario. Te
+            mostramos cómo se resuelve en Klassia.
+          </p>
+        </div>
+        <a class="button button-lime" href="/#demo">
+          Solicitar demostración <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

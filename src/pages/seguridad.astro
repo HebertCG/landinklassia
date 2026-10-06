@@ -1,0 +1,123 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const controls = [
+  {
+    n: '01',
+    title: 'Aislamiento por organización',
+    text: 'Cada academia opera en su propio subdominio y sus consultas conservan el contexto institucional. La información de una organización no se mezcla con la de otra.'
+  },
+  {
+    n: '02',
+    title: 'Roles y permisos',
+    text: 'Administración, docentes y estudiantes acceden a flujos distintos. Un docente ve sus grupos; un alumno, su propio expediente.'
+  },
+  {
+    n: '03',
+    title: 'Registro de auditoría',
+    text: 'Las acciones sensibles quedan registradas para facilitar el seguimiento cuando hace falta entender qué cambió y cuándo.'
+  },
+  {
+    n: '04',
+    title: 'Archivos protegidos',
+    text: 'Los materiales y archivos académicos usan almacenamiento privado con acceso controlado, no enlaces públicos que cualquiera pueda reenviar.'
+  },
+  {
+    n: '05',
+    title: 'Control de sesiones',
+    text: 'Las sesiones pueden revocarse, de modo que un acceso que ya no corresponde deja de funcionar.'
+  },
+  {
+    n: '06',
+    title: 'Límites de uso',
+    text: 'Los flujos sensibles aplican límites para reducir el riesgo de abuso automatizado contra la plataforma.'
+  }
+];
+---
+
+<MarketingLayout
+  title="Seguridad y protección de datos | Klassia"
+  description="Cómo Klassia separa los datos de cada academia y controla el acceso mediante roles, auditoría, sesiones revocables y almacenamiento privado."
+  active="security"
+  path="/seguridad/"
+>
+  <section class="sub-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Ruta de navegación">
+        <a href="/">Inicio</a>
+        <Icon name="arrow" size={12} />
+        <span>Seguridad</span>
+      </nav>
+
+      <div class="sub-hero-copy centered">
+        <p class="eyebrow">Seguridad y privacidad</p>
+        <h1>La información académica merece <em>límites claros.</em></h1>
+        <p class="lead">
+          Una academia maneja datos de menores de edad, resultados y documentos de identidad. Klassia
+          separa el contexto de cada organización y aplica controles de acceso para que cada persona
+          vea exactamente lo que le corresponde.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Seguridad desde la arquitectura</p>
+        <h2>No es una promesa añadida al final. <em>Es cómo funciona el sistema.</em></h2>
+      </div>
+
+      <div class="security-grid">
+        {
+          controls.map((control) => (
+            <article class="security-card">
+              <span class="n">{control.n}</span>
+              <h3>{control.title}</h3>
+              <p>{control.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow eyebrow-light">Principios de Klassia</p>
+      </div>
+      <div class="principles" style="margin-top: 1.5rem;">
+        <h2>Menor exposición.</h2>
+        <h2>Acceso necesario.</h2>
+        <h2>Contexto verificable.</h2>
+      </div>
+      <p class="lead" style="margin-top: 2rem; max-width: 46rem;">
+        Cada decisión técnica parte de reducir cuánta información queda expuesta, dar a cada rol solo
+        el acceso que necesita, y poder verificar después en qué contexto ocurrió cada acción.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">¿Tu equipo necesita más detalle?</p>
+          <h2>Conversemos con claridad sobre arquitectura y controles.</h2>
+          <p>
+            Si tu área de sistemas necesita revisar requisitos técnicos antes de decidir, respondemos
+            con detalle y sin rodeos.
+          </p>
+        </div>
+        <a
+          class="button button-lime"
+          href="mailto:cornejogarciahebertjose@gmail.com?subject=Consulta%20de%20seguridad%20de%20Klassia"
+        >
+          Contactar <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>

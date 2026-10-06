@@ -1,0 +1,67 @@
+---
+import { modules } from '../data/modules';
+
+const LOGIN_URL = 'https://nivela1.klassia.lat/login';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/"><img src="/brand/klassia-logo.svg" width="190" height="54" alt="Klassia" /></a>
+      <p>Gestión académica pensada para academias preuniversitarias del Perú.</p>
+      <a class="footer-cta" href="/#demo">Solicitar una demostración</a>
+    </div>
+
+    <nav aria-labelledby="foot-plataforma">
+      <h2 id="foot-plataforma">Plataforma</h2>
+      <ul>
+        {
+          modules.map((item) => (
+            <li>
+              <a href={`/plataforma/${item.slug}/`}>{item.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="foot-klassia">
+      <h2 id="foot-klassia">Klassia</h2>
+      <ul>
+        <li><a href="/plataforma/">La plataforma</a></li>
+        <li><a href="/para-academias/">Para academias</a></li>
+        <li><a href="/comparativa/">Comparativa</a></li>
+        <li><a href="/seguridad/">Seguridad</a></li>
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="foot-acceso">
+      <h2 id="foot-acceso">Acceso</h2>
+      <ul>
+        <li><a href={LOGIN_URL} target="_blank" rel="noreferrer">Ingresar</a></li>
+        <li>
+          <a href="mailto:cornejogarciahebertjose@gmail.com?subject=Consulta%20sobre%20Klassia"
+            >Contacto</a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <nav aria-labelledby="foot-legal">
+      <h2 id="foot-legal">Legal</h2>
+      <ul>
+        <li><a href="/privacidad/">Privacidad</a></li>
+        <li><a href="/cookies/">Cookies</a></li>
+        <li><a href="/terminos/">Términos de uso</a></li>
+        <li><a href="/aviso-legal/">Aviso legal</a></li>
+        <li><button class="footer-link-button" type="button" data-cookie-settings>Preferencias de cookies</button></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container footer-bottom">
+    <span>© {year} Klassia</span>
+    <span>Hecho en Perú para transformar la gestión educativa.</span>
+  </div>
+</footer>

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://klassia.lat/sitemap.xml
+Host: klassia.lat

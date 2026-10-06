@@ -1,0 +1,147 @@
+---
+import { modules } from '../data/modules';
+import Icon from './Icon.astro';
+
+interface Props {
+  active?: 'platform' | 'academies' | 'comparison' | 'security';
+}
+
+const { active } = Astro.props;
+const LOGIN_URL = 'https://nivela1.klassia.lat/login';
+---
+
+<header class="site-header">
+  <div class="container nav-wrap">
+    <a class="brand" href="/" aria-label="Klassia, inicio">
+      <img src="/brand/klassia-logo.svg" width="210" height="60" alt="Klassia" />
+    </a>
+
+    <button
+      class="menu-button"
+      type="button"
+      aria-expanded="false"
+      aria-controls="main-nav"
+      data-menu-button
+    >
+      <span></span><span></span><span></span>
+      <span class="sr-only">Abrir menú</span>
+    </button>
+
+    <nav id="main-nav" class="main-nav" aria-label="Navegación principal" data-menu>
+      <div class="has-menu" data-dropdown>
+        <button
+          type="button"
+          class:list={['nav-link', 'nav-trigger', active === 'platform' && 'current']}
+          aria-expanded="false"
+          aria-controls="menu-plataforma"
+          data-dropdown-button
+        >
+          Plataforma
+          <Icon name="arrow" size={14} />
+        </button>
+
+        <div id="menu-plataforma" class="dropdown" data-dropdown-panel hidden>
+          <div class="dropdown-inner">
+            <ul class="dropdown-list">
+              {
+                modules.map((item) => (
+                  <li>
+                    <a href={`/plataforma/${item.slug}/`}>
+                      <span class={`dropdown-icon tone-${item.tone}`}>
+                        <Icon name={item.icon} size={18} />
+                      </span>
+                      <span>
+                        <b>{item.name}</b>
+                        <small>{item.tagline}</small>
+                      </span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+            <a class="dropdown-all" href="/plataforma/">
+              Ver la plataforma completa <Icon name="arrow" size={14} />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <a
+        class:list={['nav-link', active === 'academies' && 'current']}
+        href="/para-academias/">Para academias</a
+      >
+      <a
+        class:list={['nav-link', active === 'comparison' && 'current']}
+        href="/comparativa/">Comparativa</a
+      >
+      <a
+        class:list={['nav-link', active === 'security' && 'current']}
+        href="/seguridad/">Seguridad</a
+      >
+
+      <a class="nav-login" href={LOGIN_URL} target="_blank" rel="noreferrer">Ingresar</a>
+      <a class="button button-small" href="/#demo">Solicitar demo</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const menuButton = document.querySelector<HTMLButtonElement>('[data-menu-button]');
+  const menu = document.querySelector<HTMLElement>('[data-menu]');
+
+  menuButton?.addEventListener('click', () => {
+    const open = menuButton.getAttribute('aria-expanded') === 'true';
+    menuButton.setAttribute('aria-expanded', String(!open));
+    menu?.classList.toggle('open', !open);
+  });
+
+  menu?.querySelectorAll('a').forEach((link) =>
+    link.addEventListener('click', () => {
+      menuButton?.setAttribute('aria-expanded', 'false');
+      menu.classList.remove('open');
+    })
+  );
+
+  const dropdown = document.querySelector<HTMLElement>('[data-dropdown]');
+  const dropdownButton = dropdown?.querySelector<HTMLButtonElement>('[data-dropdown-button]');
+  const dropdownPanel = dropdown?.querySelector<HTMLElement>('[data-dropdown-panel]');
+
+  const setDropdown = (open: boolean) => {
+    dropdownButton?.setAttribute('aria-expanded', String(open));
+    dropdownPanel?.toggleAttribute('hidden', !open);
+    dropdown?.classList.toggle('open', open);
+  };
+
+  dropdownButton?.addEventListener('click', () => {
+    setDropdown(dropdownButton.getAttribute('aria-expanded') !== 'true');
+  });
+
+  // Pointer users get hover; the click handler above keeps it usable by keyboard and touch.
+  const onPointer = () => window.matchMedia('(min-width: 981px)').matches;
+  let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+  dropdown?.addEventListener('pointerenter', () => {
+    clearTimeout(closeTimer);
+    if (onPointer()) setDropdown(true);
+  });
+
+  // A short grace period: the panel is much wider than its trigger, so a
+  // diagonal move towards an item can briefly leave the hover area.
+  dropdown?.addEventListener('pointerleave', () => {
+    if (!onPointer()) return;
+    clearTimeout(closeTimer);
+    closeTimer = setTimeout(() => setDropdown(false), 220);
+  });
+
+  dropdown?.addEventListener('focusout', (event) => {
+    if (!dropdown.contains(event.relatedTarget as Node)) setDropdown(false);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setDropdown(false);
+  });
+
+  document.addEventListener('click', (event) => {
+    if (dropdown && !dropdown.contains(event.target as Node)) setDropdown(false);
+  });
+</script>

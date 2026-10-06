@@ -1,0 +1,592 @@
+/* Collage hero: centred copy surrounded by floating fragments of the product UI.
+   The fragments are decorative (aria-hidden) and built in CSS rather than as
+   images, so they stay crisp at any size and cost nothing to download. */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding-top: clamp(2.25rem, 1.25rem + 2.4vw, 3.5rem);
+  padding-bottom: clamp(3rem, 2rem + 4vw, 5rem);
+  text-align: center;
+  background:
+    radial-gradient(44% 38% at 12% 58%, rgba(49, 201, 232, 0.17), transparent 70%),
+    radial-gradient(40% 36% at 88% 46%, rgba(117, 88, 232, 0.15), transparent 70%),
+    radial-gradient(46% 34% at 72% 88%, rgba(201, 240, 74, 0.2), transparent 70%),
+    radial-gradient(38% 30% at 26% 92%, rgba(255, 216, 77, 0.16), transparent 70%),
+    radial-gradient(60% 46% at 50% 2%, rgba(23, 105, 255, 0.07), transparent 72%),
+    linear-gradient(180deg, #fcfdff, #f6faff);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  max-width: 62rem;
+  margin-inline: auto;
+  display: grid;
+  gap: 1.15rem;
+  justify-items: center;
+}
+
+.hero h1 {
+  font-size: clamp(2.5rem, 1.3rem + 3.6vw, 4.4rem);
+  letter-spacing: -0.035em;
+}
+
+.hero h1 em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.hero-lead {
+  max-width: 46rem;
+  font-size: var(--t-lead);
+  color: var(--muted);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+.hero-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.hero-proof span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-proof svg {
+  color: var(--mint);
+}
+
+/* ---------- the collage ---------- */
+/* The fragments live in a stage strip under the copy, never beside it, so they
+   can never collide with the headline no matter how the text wraps. Pieces are
+   allowed to bleed past the bottom edge — the section clips them. */
+.collage {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(290px, 25.5vw, 384px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.frag {
+  position: absolute;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow:
+    0 2px 6px rgba(16, 28, 69, 0.04),
+    0 18px 40px rgba(16, 28, 69, 0.09);
+  font-size: 11px;
+  line-height: 1.4;
+  text-align: left;
+  animation: drift 9s var(--ease) infinite alternate;
+}
+
+.frag:nth-child(even) {
+  animation-duration: 11s;
+  animation-delay: -3s;
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-9px);
+  }
+}
+
+.frag-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 9px;
+}
+
+.frag-head b {
+  font-size: 11.5px;
+  font-weight: 800;
+}
+
+.frag-head span {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--faint);
+}
+
+.chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 9.5px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.chip-green {
+  background: #e0f8ef;
+  color: #157956;
+}
+.chip-yellow {
+  background: #fff4d4;
+  color: #806200;
+}
+.chip-blue {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+}
+
+.dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+/* Deep enough at both gradient stops for the white monogram to stay legible. */
+.dot.a1 {
+  background: linear-gradient(135deg, #1257d6, #2363b4);
+}
+.dot.a2 {
+  background: linear-gradient(135deg, #b8422f, #bf5130);
+}
+.dot.a3 {
+  background: linear-gradient(135deg, #0d5f43, #106b49);
+}
+.dot.a4 {
+  background: linear-gradient(135deg, #4b35b0, #6f55cc);
+}
+.dot.a5 {
+  background: linear-gradient(135deg, #ffd84d, #ffc24d);
+  color: #5a3f00;
+}
+.dot.a6 {
+  background: linear-gradient(135deg, #10668f, #1565d6);
+}
+
+.frag u {
+  text-decoration: none;
+  color: var(--ink);
+}
+
+/* square icon tiles, like the pastel tiles in the reference */
+.tile {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: #fff;
+  box-shadow: 0 16px 34px rgba(16, 28, 69, 0.16);
+  animation: drift 10s var(--ease) infinite alternate;
+}
+
+.tile-blue {
+  background: linear-gradient(140deg, var(--blue), var(--cyan));
+}
+.tile-lime {
+  background: linear-gradient(140deg, #a7e02f, var(--lime));
+  color: #2f4300;
+}
+.tile-violet {
+  background: linear-gradient(140deg, var(--violet), #a98cff);
+}
+.tile-coral {
+  background: linear-gradient(140deg, #ff6f5f, #ffa07a);
+}
+
+/* ---------- individual placement (wide screens only) ---------- */
+.f-attendance {
+  left: 1.5%;
+  top: 1%;
+  width: 232px;
+  padding: 14px;
+}
+
+.f-attendance .row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.f-attendance .row + .row {
+  margin-top: 8px;
+}
+
+.f-attendance .row b {
+  flex: 1;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.f-schedule {
+  left: 9%;
+  top: 44%;
+  width: 216px;
+  padding: 14px;
+}
+
+.f-schedule .slot {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 0;
+}
+
+.f-schedule .slot + .slot {
+  border-top: 1px solid var(--line-soft);
+}
+
+.f-schedule time {
+  width: 34px;
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--faint);
+}
+
+.f-schedule i {
+  width: 4px;
+  height: 22px;
+  border-radius: 99px;
+  flex-shrink: 0;
+}
+
+.f-schedule b {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.f-schedule small {
+  font-size: 9.5px;
+  color: var(--muted);
+}
+
+.f-avatars {
+  left: 24%;
+  top: 23%;
+  width: auto;
+  padding: 9px 13px 9px 9px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+}
+
+.f-avatars .stack {
+  display: flex;
+}
+
+.f-avatars .dot {
+  width: 26px;
+  height: 26px;
+  border: 2px solid #fff;
+}
+
+.f-avatars .dot + .dot {
+  margin-left: -9px;
+}
+
+.f-avatars em {
+  font-style: normal;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.f-grades {
+  left: 29%;
+  top: 55%;
+  width: 206px;
+  padding: 14px;
+}
+
+.f-grades .bar {
+  display: grid;
+  grid-template-columns: 54px 1fr 26px;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.f-grades .bar + .bar {
+  margin-top: 8px;
+}
+
+.f-grades .track {
+  height: 7px;
+  border-radius: 99px;
+  background: #eef2f9;
+  overflow: hidden;
+}
+
+.f-grades .track i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+}
+
+.f-grades em {
+  font-style: normal;
+  text-align: right;
+  color: var(--muted);
+}
+
+.f-kpi {
+  left: 42%;
+  top: 22%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 16px 11px 11px;
+  border-radius: 14px;
+}
+
+.f-kpi .kpi-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: var(--blue-soft);
+  color: var(--blue-text);
+  flex-shrink: 0;
+}
+
+.f-kpi b {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.f-kpi small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.f-menu {
+  right: 1.5%;
+  top: 0%;
+  width: 230px;
+  padding: 12px;
+}
+
+.f-menu .item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 9px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.f-menu .item.on {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  font-weight: 800;
+}
+
+.f-menu .item span {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  background: var(--page);
+  color: var(--faint);
+}
+
+.f-menu .item.on span {
+  background: #fff;
+  color: var(--blue-text);
+}
+
+.f-chart {
+  right: 3.5%;
+  top: 50%;
+  width: 250px;
+  padding: 14px;
+}
+
+.f-chart .bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 62px;
+}
+
+.f-chart .bars i {
+  flex: 1;
+  border-radius: 5px 5px 2px 2px;
+  background: linear-gradient(180deg, var(--sky), var(--blue));
+}
+
+.f-chart .labels {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.f-chart .labels span {
+  flex: 1;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--faint);
+}
+
+.f-live {
+  left: 50%;
+  top: 84%;
+  transform: translateX(-50%);
+  width: auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-radius: 999px;
+}
+
+.f-live .pin {
+  display: grid;
+  gap: 1px;
+}
+
+.f-live .pin small {
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: var(--faint);
+}
+
+.f-live .pin b {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.f-live .live-dot {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.f-live .live-dot i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 4px rgba(51, 207, 154, 0.2);
+}
+
+.f-notify {
+  right: 2%;
+  top: 90%;
+  width: 244px;
+  padding: 13px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.f-notify b {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.f-notify small {
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.t-one {
+  left: 19%;
+  top: 0%;
+}
+.t-two {
+  right: 21%;
+  top: 8%;
+}
+.t-three {
+  left: 2.5%;
+  top: 74%;
+}
+.t-four {
+  right: 28%;
+  top: 56%;
+}
+
+/* Reserve the stage height below the copy so the two can never meet. */
+@media (min-width: 1341px) {
+  .hero {
+    padding-bottom: clamp(312px, 27vw, 406px);
+  }
+}
+
+/* ---------- narrow screens ----------
+   Too little room to scatter fragments without colliding with the copy, so the
+   same markup reflows into a short stacked set underneath it. */
+@media (max-width: 1340px) {
+  .collage {
+    position: relative;
+    inset: auto;
+    z-index: 1;
+    display: flex;
+    gap: 12px;
+    width: var(--container);
+    margin: 2.5rem auto 0;
+  }
+
+  .collage > * {
+    display: none;
+  }
+
+  .collage > .f-attendance,
+  .collage > .f-grades {
+    display: block;
+    position: static;
+    width: auto;
+    flex: 1;
+    min-width: 0;
+    animation: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .collage {
+    flex-direction: column;
+  }
+}

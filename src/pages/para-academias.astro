@@ -1,0 +1,210 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from '../components/Icon.astro';
+import Shot from '../components/Shot.astro';
+
+const steps = [
+  {
+    n: '01',
+    title: 'Configura tu espacio',
+    text: 'Tu academia recibe su propio subdominio, su identidad visual y su estructura de ciclos, cursos y grupos.'
+  },
+  {
+    n: '02',
+    title: 'Importa el ciclo',
+    text: 'Carga el padrón de alumnos por CSV, registra a los docentes y arma el horario semanal de cada grupo.'
+  },
+  {
+    n: '03',
+    title: 'Empieza a operar',
+    text: 'Asistencia, materiales, tareas y evaluaciones desde el primer día. Los reportes se llenan solos.'
+  }
+];
+---
+
+<MarketingLayout
+  title="Para academias | Klassia"
+  description="Klassia organiza la operación de una academia preuniversitaria y conecta administración, docentes y estudiantes sobre la misma información."
+  active="academies"
+  path="/para-academias/"
+>
+  <section class="photo-hero">
+    <picture>
+      <source media="(max-width: 700px)" srcset="/brand/klassia-students-800.webp" />
+      <img
+        src="/brand/klassia-students-1600.webp"
+        width="1600"
+        height="858"
+        alt="Estudiantes y docente trabajando en el aula de una academia preuniversitaria"
+      />
+    </picture>
+    <div class="container">
+      <div class="sub-hero-copy">
+        <p class="eyebrow eyebrow-light">Para academias preuniversitarias</p>
+        <h1>Una operación clara deja más espacio para <em>enseñar.</em></h1>
+        <p class="lead">
+          Klassia no es un software corporativo adaptado al aula. Está diseñada alrededor de los
+          ciclos, grupos, cursos y horarios reales de una academia que prepara postulantes.
+        </p>
+        <div class="hero-actions" style="justify-content: flex-start;">
+          <a class="button button-lime" href="/#demo">Conversemos sobre tu academia</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head centered">
+        <p class="eyebrow">Cómo empieza</p>
+        <h2>Lo importante no es digitalizar más. <em>Es conectar mejor.</em></h2>
+        <p class="lead">
+          La información se registra una vez y acompaña el recorrido del alumno entre administración,
+          aula y seguimiento. No hay un segundo sistema que alguien tenga que mantener al día.
+        </p>
+      </div>
+
+      <div class="steps">
+        {
+          steps.map((step) => (
+            <article class="step">
+              <b>{step.n}</b>
+              <h3>{step.title}</h3>
+              <p>{step.text}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background: var(--page);">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">Para coordinación</p>
+          <h3>Menos tiempo reconstruyendo información. Más decisiones con contexto.</h3>
+          <p>
+            Coordinación puede revisar cómo va el ciclo sin pedir archivos nuevos ni esperar a que
+            alguien consolide. El estado de cada grupo está donde debe estar.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Accesos por rol.</b> Cada persona entra a lo que le corresponde, sin ver el
+                sistema entero.</span
+              >
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Datos separados.</b> La información de tu academia no comparte contexto con
+                ninguna otra.</span
+              >
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span
+                ><b>Escritorio y móvil.</b> El alumno entra desde el celular; coordinación, desde la
+                computadora.</span
+              >
+            </li>
+          </ul>
+        </div>
+        <Shot
+          shot="dashboard-admin"
+          alt="Panel de administración de Klassia con la operación del día de una academia"
+          width={2960}
+          height={1472}
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-copy">
+          <p class="eyebrow">Para el estudiante</p>
+          <h3>El postulante ya vive en el celular. Klassia también.</h3>
+          <p>
+            El alumno abre la plataforma y sabe qué clase toca, qué debe entregar y cómo va en cada
+            curso. No tiene que buscar una separata en un chat de doscientos mensajes.
+          </p>
+          <a class="text-link" href="/plataforma/">
+            Ver todos los módulos <Icon name="arrow" size={15} />
+          </a>
+        </div>
+        <Shot
+          shot="alumno-movil"
+          alt="Vista móvil del panel del estudiante en Klassia con su siguiente clase, tareas pendientes y rendimiento"
+          width={780}
+          height={1602}
+          sizes="(max-width: 860px) 70vw, 340px"
+          chrome={false}
+          phone
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tight" style="background: var(--page);">
+    <div class="container">
+      <div class="story-grid">
+        <figure class="story-photo">
+          <picture>
+            <source media="(max-width: 700px)" srcset="/brand/klassia-team-800.webp" />
+            <img
+              src="/brand/klassia-team-1600.webp"
+              width="1600"
+              height="1000"
+              alt="Coordinadora y docente revisando el avance de sus estudiantes"
+              loading="lazy"
+            />
+          </picture>
+        </figure>
+        <div class="feature-copy">
+          <p class="eyebrow">Tu identidad, no la nuestra</p>
+          <h3>Klassia se adapta a la academia, no al revés.</h3>
+          <p>
+            Tu academia opera en su propio subdominio, con su logo y sus colores. Para el alumno y
+            para el docente, la plataforma es de tu institución.
+          </p>
+          <ul class="feature-list">
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>Subdominio propio.</b> Tu academia tiene su propia dirección.</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>Identidad configurable.</b> Logo y colores de tu institución.</span>
+            </li>
+            <li>
+              <Icon name="check" size={18} />
+              <span><b>Tu estructura.</b> Tus ciclos, tus grupos y tus cursos, no una plantilla.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-copy">
+          <p class="eyebrow eyebrow-light">Empecemos</p>
+          <h2>Una academia tiene su propia forma de enseñar.</h2>
+          <p>
+            Cuéntanos cómo trabaja la tuya y te mostramos cómo se vería dentro de Klassia, con tus
+            ciclos y tus grupos.
+          </p>
+        </div>
+        <a class="button button-lime" href="/#demo">
+          Solicitar demostración <Icon name="arrow" size={16} />
+        </a>
+      </div>
+    </div>
+  </section>
+</MarketingLayout>
