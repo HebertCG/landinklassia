@@ -4,7 +4,7 @@ Sitio público de Klassia construido con Astro y preparado como despliegue está
 
 ## Desarrollo
 
-Requiere Node.js 22.16 o posterior dentro de la rama 22.
+Requiere Node.js 22.19 o posterior dentro de la rama 22.
 
 ```bash
 npm ci
@@ -26,6 +26,7 @@ Al importar este repositorio desde **Workers & Pages → Create application → 
 
 - Rama de producción: `main`
 - Comando de build: `npm run build`
+- Comando de despliegue: `npm run deploy`
 - Directorio de salida: `dist`
 - Directorio raíz: `/`
 - Versión de Node: se toma de `.node-version`
@@ -43,4 +44,5 @@ confirma que el dominio canónico coincida con el valor `site` de `astro.config.
 | `npm run dev` | Servidor local de desarrollo |
 | `npm run check` | Validación de Astro y TypeScript |
 | `npm run build` | Validación y build estático de producción |
+| `npm run deploy` | Despliegue del directorio `dist` en Cloudflare Pages |
 | `npm run preview` | Vista previa del directorio generado |
