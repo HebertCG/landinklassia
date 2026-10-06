@@ -1,0 +1,8 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Klassia</title>
+  <desc id="desc">Símbolo geométrico K de Klassia</desc>
+  <rect width="120" height="120" rx="32" fill="#1769FF"/>
+  <path d="M31 26V94" stroke="white" stroke-width="11" stroke-linecap="round"/>
+  <path d="M36 60L73 29M36 60L76 91" stroke="white" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M85 28L106 60L85 92" stroke="#C9F04A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
