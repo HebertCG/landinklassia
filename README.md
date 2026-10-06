@@ -1,6 +1,6 @@
 # Klassia Landing
 
-Sitio público de Klassia construido con Astro y preparado como despliegue estático para Cloudflare Pages.
+Sitio público de Klassia construido con Astro y preparado como despliegue estático mediante Cloudflare Workers Static Assets.
 
 ## Desarrollo
 
@@ -20,9 +20,9 @@ npm run preview
 
 El build genera 15 rutas estáticas dentro de `dist/`.
 
-## Cloudflare Pages
+## Cloudflare Workers
 
-Al importar este repositorio desde **Workers & Pages → Create application → Pages**, utiliza:
+Al conectar este repositorio a **Workers & Pages → Workers Builds**, utiliza:
 
 - Rama de producción: `main`
 - Comando de build: `npm run build`
@@ -31,10 +31,10 @@ Al importar este repositorio desde **Workers & Pages → Create application → 
 - Directorio raíz: `/`
 - Versión de Node: se toma de `.node-version`
 
-`wrangler.jsonc` contiene la configuración equivalente para Pages. El directorio `public/` incluye
+`wrangler.jsonc` apunta los recursos estáticos de Workers al directorio `dist`. El directorio `public/` incluye
 los encabezados de seguridad y caché que Cloudflare copiará al despliegue.
 
-Después del primer despliegue, agrega `klassia.lat` como dominio personalizado en Cloudflare Pages y
+Después del primer despliegue, agrega `klassia.lat` como dominio personalizado en Cloudflare Workers y
 confirma que el dominio canónico coincida con el valor `site` de `astro.config.mjs`.
 
 ## Comandos
@@ -44,5 +44,5 @@ confirma que el dominio canónico coincida con el valor `site` de `astro.config.
 | `npm run dev` | Servidor local de desarrollo |
 | `npm run check` | Validación de Astro y TypeScript |
 | `npm run build` | Validación y build estático de producción |
-| `npm run deploy` | Despliegue del directorio `dist` en Cloudflare Pages |
+| `npm run deploy` | Despliegue del directorio `dist` mediante Workers Static Assets |
 | `npm run preview` | Vista previa del directorio generado |
