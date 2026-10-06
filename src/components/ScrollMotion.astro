@@ -1,0 +1,84 @@
+<div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const revealTargets = new Set<HTMLElement>();
+
+  const addReveal = (element: Element | null, direction = 'up', delay = 0) => {
+    if (!(element instanceof HTMLElement) || revealTargets.has(element)) return;
+    element.dataset.reveal = direction;
+    element.style.setProperty('--reveal-delay', `${delay}ms`);
+    revealTargets.add(element);
+  };
+
+  document.querySelectorAll<HTMLElement>('.hero-copy > *').forEach((item, index) =>
+    addReveal(item, 'up', index * 90)
+  );
+  addReveal(document.querySelector('.collage'), 'up', 260);
+
+  document.querySelectorAll<HTMLElement>(
+    '.section-head, .sub-hero-copy, .photo-hero .sub-hero-copy, .legal-hero .legal-shell, .principles, .compare, .cta-card'
+  ).forEach((item) => addReveal(item));
+
+  document.querySelectorAll<HTMLElement>('.feature-row').forEach((row) => {
+    const children = Array.from(row.children);
+    addReveal(children[0] ?? null, 'left');
+    addReveal(children[1] ?? null, 'right', 90);
+  });
+
+  document.querySelectorAll<HTMLElement>('.story-grid').forEach((row) => {
+    const children = Array.from(row.children);
+    addReveal(children[0] ?? null, 'left');
+    addReveal(children[1] ?? null, 'right', 90);
+  });
+
+  const staggeredGroups = [
+    '.module-grid', '.stats', '.steps', '.security-grid', '.alt-grid', '.capability-grid',
+    '.module-nav', '.replaces', '.footer-grid'
+  ];
+
+  staggeredGroups.forEach((selector) => {
+    document.querySelectorAll<HTMLElement>(selector).forEach((group) => {
+      Array.from(group.children).forEach((item, index) => addReveal(item, 'up', Math.min(index, 5) * 70));
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('.legal-content > *').forEach((item, index) =>
+    addReveal(item, 'up', (index % 3) * 45)
+  );
+
+  document.documentElement.classList.add('motion-ready');
+
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    revealTargets.forEach((item) => item.dataset.revealed = 'true');
+  } else {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).dataset.revealed = 'true';
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -7% 0px' }
+    );
+    revealTargets.forEach((item) => observer.observe(item));
+  }
+
+  const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  let ticking = false;
+  const updateProgress = () => {
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const value = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
+    progress?.style.setProperty('--scroll-progress', String(value));
+    ticking = false;
+  };
+  const requestProgress = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(updateProgress);
+  };
+  updateProgress();
+  window.addEventListener('scroll', requestProgress, { passive: true });
+  window.addEventListener('resize', requestProgress, { passive: true });
+</script>
