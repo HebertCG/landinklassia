@@ -4,6 +4,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import CookieConsent from '../components/CookieConsent.astro';
 import ScrollMotion from '../components/ScrollMotion.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 
 interface Props {
   title: string;
@@ -154,6 +155,7 @@ const schema = {
     <SiteHeader active={active} />
     <main id="contenido"><slot /></main>
     <SiteFooter />
+    <WhatsAppFloat />
     <CookieConsent />
   </body>
 </html>

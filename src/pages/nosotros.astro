@@ -1,6 +1,7 @@
 ---
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
+import { WHATSAPP_URL } from '../config/contact';
 ---
 
 <MarketingLayout
@@ -139,7 +140,9 @@ import Icon from '../components/Icon.astro';
         <h2>¿Quieres construir una gestión académica más clara?</h2>
         <p>Te mostramos cómo Klassia puede acompañar la operación diaria de tu academia.</p>
       </div>
-      <a class="button button-lime" href="/#demo">Solicitar una demostración</a>
+      <a class="button button-lime" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+        Solicitar una demostración
+      </a>
     </div>
   </section>
 </MarketingLayout>

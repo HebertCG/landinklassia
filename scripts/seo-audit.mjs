@@ -24,6 +24,7 @@ const pages = walk(dist).filter((file) => file.endsWith(`${sep}index.html`));
 const titles = new Map();
 const descriptions = new Map();
 const canonicals = new Set();
+const legalPages = new Set(['/aviso-legal/', '/cookies/', '/privacidad/', '/terminos/']);
 
 for (const file of pages) {
   const html = readFileSync(file, 'utf8');
@@ -60,6 +61,16 @@ for (const file of pages) {
     if (page !== '/' && !types.includes('BreadcrumbList')) fail(page, 'falta BreadcrumbList en JSON-LD');
   } catch {
     fail(page, 'JSON-LD ausente o inválido');
+  }
+
+  if (html.includes('href="/#demo"') || html.includes('href="#demo"')) {
+    fail(page, 'CTA comercial todavía apunta a la sección demo en vez de WhatsApp');
+  }
+  if (!legalPages.has(page) && !/href="https:\/\/wa\.me\/\d+/i.test(html)) {
+    fail(page, 'falta enlace comercial de WhatsApp');
+  }
+  if (!legalPages.has(page) && /href="mailto:/i.test(html)) {
+    fail(page, 'un enlace comercial todavía apunta a correo');
   }
 
   for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {

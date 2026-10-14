@@ -2,6 +2,7 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
 import Shot from '../components/Shot.astro';
+import { WHATSAPP_URL } from '../config/contact';
 import { alternatives, comparisonRows, supportLabel } from '../data/comparison';
 import type { Support } from '../data/comparison';
 
@@ -190,7 +191,7 @@ const columns = [
             mostramos cómo se resuelve en Klassia.
           </p>
         </div>
-        <a class="button button-lime" href="/#demo">
+        <a class="button button-lime" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
           Solicitar demostración <Icon name="arrow" size={16} />
         </a>
       </div>

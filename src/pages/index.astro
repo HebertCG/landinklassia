@@ -2,6 +2,7 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
 import Shot from '../components/Shot.astro';
+import { WHATSAPP_URL } from '../config/contact';
 import { modules } from '../data/modules';
 
 const roles = [
@@ -63,7 +64,9 @@ const roles = [
         La operación, la enseñanza y el seguimiento del estudiante en una sola plataforma.
       </p>
       <div class="hero-actions">
-        <a class="button button-primary" href="#demo">Solicitar una demostración</a>
+        <a class="button button-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+          Solicitar una demostración
+        </a>
         <a class="button button-ghost" href="/plataforma/">Ver la plataforma</a>
       </div>
       <div class="hero-proof">
@@ -391,7 +394,9 @@ const roles = [
         </div>
         <a
           class="button button-lime"
-          href="mailto:cornejogarciahebertjose@gmail.com?subject=Quiero%20una%20demo%20de%20Klassia"
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
         >
           Solicitar demostración <Icon name="arrow" size={16} />
         </a>

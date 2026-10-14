@@ -2,6 +2,7 @@
 import MarketingLayout from '../../layouts/MarketingLayout.astro';
 import Icon from '../../components/Icon.astro';
 import Shot from '../../components/Shot.astro';
+import { WHATSAPP_URL } from '../../config/contact';
 import { modules } from '../../data/modules';
 
 export function getStaticPaths() {
@@ -43,7 +44,9 @@ const { module, prev, next } = Astro.props;
         <h1>{module.headline}</h1>
         <p class="lead">{module.summary}</p>
         <div class="hero-actions" style="justify-content: flex-start;">
-          <a class="button button-primary" href="/#demo">Verlo en una demo</a>
+          <a class="button button-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+            Verlo en una demo
+          </a>
           <a class="button button-ghost" href="/plataforma/">Todos los módulos</a>
         </div>
       </div>
@@ -111,7 +114,7 @@ const { module, prev, next } = Astro.props;
             y tus cursos.
           </p>
         </div>
-        <a class="button button-lime" href="/#demo">
+        <a class="button button-lime" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
           Solicitar demostración <Icon name="arrow" size={16} />
         </a>
       </div>

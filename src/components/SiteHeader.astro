@@ -1,5 +1,6 @@
 ---
 import { modules } from '../data/modules';
+import { WHATSAPP_URL } from '../config/contact';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -7,7 +8,6 @@ interface Props {
 }
 
 const { active } = Astro.props;
-const LOGIN_URL = 'https://nivela1.klassia.lat/login';
 ---
 
 <header class="site-header">
@@ -83,8 +83,9 @@ const LOGIN_URL = 'https://nivela1.klassia.lat/login';
         href="/seguridad/">Seguridad</a
       >
 
-      <a class="nav-login" href={LOGIN_URL} target="_blank" rel="noreferrer">Ingresar</a>
-      <a class="button button-small" href="/#demo">Solicitar demo</a>
+      <a class="button button-small" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+        Solicitar demo
+      </a>
     </nav>
   </div>
 </header>

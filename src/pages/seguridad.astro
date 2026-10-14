@@ -1,6 +1,7 @@
 ---
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
+import { WHATSAPP_URL } from '../config/contact';
 
 const controls = [
   {
@@ -113,7 +114,9 @@ const controls = [
         </div>
         <a
           class="button button-lime"
-          href="mailto:cornejogarciahebertjose@gmail.com?subject=Consulta%20de%20seguridad%20de%20Klassia"
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
         >
           Contactar <Icon name="arrow" size={16} />
         </a>

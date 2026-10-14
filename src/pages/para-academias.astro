@@ -2,6 +2,7 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
 import Shot from '../components/Shot.astro';
+import { WHATSAPP_URL } from '../config/contact';
 
 const steps = [
   {
@@ -47,7 +48,9 @@ const steps = [
           ciclos, grupos, cursos y horarios reales de una academia que prepara postulantes.
         </p>
         <div class="hero-actions" style="justify-content: flex-start;">
-          <a class="button button-lime" href="/#demo">Conversemos sobre tu academia</a>
+          <a class="button button-lime" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+            Conversemos sobre tu academia
+          </a>
         </div>
       </div>
     </div>
@@ -201,7 +204,7 @@ const steps = [
             ciclos y tus grupos.
           </p>
         </div>
-        <a class="button button-lime" href="/#demo">
+        <a class="button button-lime" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
           Solicitar demostración <Icon name="arrow" size={16} />
         </a>
       </div>

@@ -50,6 +50,17 @@ El sitemap se genera automáticamente durante cada build. Para usar alternativam
 por etiqueta HTML, define `PUBLIC_GOOGLE_SITE_VERIFICATION` como variable de build en Cloudflare con
 el valor entregado por Search Console y vuelve a desplegar.
 
+## Contacto por WhatsApp
+
+Los botones comerciales usan `PUBLIC_WHATSAPP_URL`. En **Workers & Pages → tu Worker → Settings →
+Build → Build Variables and Secrets**, configura esa variable con una URL completa de `wa.me` y
+vuelve a desplegar. El repositorio incluye el número público actual como valor predeterminado para
+que los builds locales y de producción sigan funcionando si la variable todavía no existe.
+
+```text
+PUBLIC_WHATSAPP_URL=https://wa.me/51989453142?text=Hola%2C%20quiero%20solicitar%20una%20demostraci%C3%B3n%20de%20Klassia%20para%20mi%20academia.
+```
+
 ## Comandos
 
 | Comando | Uso |

@@ -1,5 +1,6 @@
 ---
 import { modules } from '../data/modules';
+import { WHATSAPP_URL } from '../config/contact';
 
 const LOGIN_URL = 'https://nivela1.klassia.lat/login';
 const year = new Date().getFullYear();
@@ -10,7 +11,9 @@ const year = new Date().getFullYear();
     <div class="footer-brand">
       <a href="/"><img src="/brand/klassia-logo-white.svg" width="190" height="54" alt="Klassia" /></a>
       <p>Gestión académica pensada para academias preuniversitarias del Perú.</p>
-      <a class="footer-cta" href="/#demo">Solicitar una demostración</a>
+      <a class="footer-cta" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+        Solicitar una demostración
+      </a>
     </div>
 
     <nav aria-labelledby="foot-plataforma">
@@ -42,9 +45,7 @@ const year = new Date().getFullYear();
       <ul>
         <li><a href={LOGIN_URL} target="_blank" rel="noreferrer">Ingresar</a></li>
         <li>
-          <a href="mailto:cornejogarciahebertjose@gmail.com?subject=Consulta%20sobre%20Klassia"
-            >Contacto</a
-          >
+          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">Contacto por WhatsApp</a>
         </li>
       </ul>
     </nav>
