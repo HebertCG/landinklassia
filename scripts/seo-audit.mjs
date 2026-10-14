@@ -72,6 +72,9 @@ for (const file of pages) {
   if (!legalPages.has(page) && /href="mailto:/i.test(html)) {
     fail(page, 'un enlace comercial todavía apunta a correo');
   }
+  if (/href="https?:\/\/nivela1\.klassia\.lat(?:[\/"])/i.test(html)) {
+    fail(page, 'todavía enlaza al subdominio antiguo nivela1.klassia.lat');
+  }
 
   for (const match of html.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
     const href = match[1];
