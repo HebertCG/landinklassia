@@ -3,7 +3,7 @@ import { modules } from '../data/modules';
 import Icon from './Icon.astro';
 
 interface Props {
-  active?: 'platform' | 'academies' | 'comparison' | 'security';
+  active?: 'platform' | 'academies' | 'about' | 'comparison' | 'security';
 }
 
 const { active } = Astro.props;
@@ -69,6 +69,10 @@ const LOGIN_URL = 'https://nivela1.klassia.lat/login';
       <a
         class:list={['nav-link', active === 'academies' && 'current']}
         href="/para-academias/">Para academias</a
+      >
+      <a
+        class:list={['nav-link', active === 'about' && 'current']}
+        href="/nosotros/">Nosotros</a
       >
       <a
         class:list={['nav-link', active === 'comparison' && 'current']}

@@ -84,6 +84,21 @@ for (const canonical of canonicals) {
   if (!sitemapUrls.includes(canonical)) fail('/sitemap-0.xml', `falta ${canonical}`);
 }
 
+const notFoundPath = join(dist, '404.html');
+if (!existsSync(notFoundPath)) {
+  fail('/404.html', 'falta la página de error personalizada');
+} else {
+  const notFoundHtml = readFileSync(notFoundPath, 'utf8');
+  const notFoundRobots = capture(notFoundHtml, /<meta name="robots" content="([^"]+)"/i);
+  const notFoundH1Count = (notFoundHtml.match(/<h1(?:\s|>)/gi) ?? []).length;
+
+  if (!notFoundRobots.includes('noindex')) fail('/404.html', 'debe incluir noindex');
+  if (notFoundH1Count !== 1) fail('/404.html', `se esperaban 1 H1 y hay ${notFoundH1Count}`);
+  if (sitemapUrls.some((url) => /\/404(?:\/|\.html)?$/.test(url))) {
+    fail('/sitemap-0.xml', 'la página 404 no debe aparecer en el sitemap');
+  }
+}
+
 if (failures.length) {
   console.error(`SEO audit failed with ${failures.length} issue(s):\n- ${failures.join('\n- ')}`);
   process.exit(1);

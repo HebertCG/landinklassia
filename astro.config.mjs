@@ -8,6 +8,7 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     sitemap({
+      filter: (page) => !page.endsWith('/404/') && !page.endsWith('/404.html'),
       namespaces: {
         news: false,
         video: false,

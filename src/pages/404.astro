@@ -1,0 +1,34 @@
+---
+import MarketingLayout from '../layouts/MarketingLayout.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<MarketingLayout
+  title="Página no encontrada | Klassia"
+  description="La página que buscas no existe o cambió de dirección. Vuelve al inicio o explora la plataforma Klassia."
+  path="/404/"
+  noindex={true}
+>
+  <section class="error-page">
+    <div class="container error-shell">
+      <div class="error-code" aria-hidden="true">404</div>
+      <p class="eyebrow">Página no encontrada</p>
+      <h1>Este enlace no lleva a ninguna clase.</h1>
+      <p class="lead">
+        La dirección puede estar incompleta o la página pudo haberse movido. Puedes volver al inicio
+        o conocer todo lo que reúne Klassia.
+      </p>
+      <div class="error-actions">
+        <a class="button button-primary" href="/">Volver al inicio</a>
+        <a class="button button-ghost" href="/plataforma/">
+          Explorar la plataforma <Icon name="arrow" size={16} />
+        </a>
+      </div>
+      <nav class="error-links" aria-label="Enlaces útiles">
+        <a href="/para-academias/">Para academias</a>
+        <a href="/nosotros/">Sobre nosotros</a>
+        <a href="/seguridad/">Seguridad</a>
+      </nav>
+    </div>
+  </section>
+</MarketingLayout>
