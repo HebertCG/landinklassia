@@ -129,6 +129,9 @@ const { module, prev, next } = Astro.props;
           <b>{next.name}</b>
         </a>
       </nav>
+      <nav class="module-pages" aria-label="Páginas de módulos">
+        {modules.map((item, index) => <a href={`/plataforma/${item.slug}/`} aria-label={`Módulo ${index + 1}: ${item.name}`} aria-current={item.slug === module.slug ? 'page' : undefined}>{String(index + 1).padStart(2, '0')}</a>)}
+      </nav>
     </div>
   </section>
 </MarketingLayout>

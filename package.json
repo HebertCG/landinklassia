@@ -12,6 +12,7 @@
     "build": "astro check && astro build",
     "deploy": "wrangler deploy",
     "audit:seo": "npm run build && node scripts/seo-audit.mjs",
+    "audit:ui": "node scripts/ui-audit.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },

@@ -1,0 +1,50 @@
+<dialog class="screenshot-viewer" aria-label="Vista ampliada del sistema" data-screenshot-viewer>
+  <form method="dialog"><p>KLASSIA / POR DENTRO</p><button type="submit" aria-label="Cerrar captura ampliada">Cerrar <span aria-hidden="true">×</span></button></form>
+  <div class="screenshot-scroll"><img alt="" data-full-screenshot /></div>
+  <p class="screenshot-pan-hint">Desliza la captura para explorar todos los detalles ↔</p>
+  <p class="screenshot-caption" data-screenshot-caption></p>
+</dialog>
+<script>
+  const viewer = document.querySelector<HTMLDialogElement>('[data-screenshot-viewer]');
+  const image = viewer?.querySelector<HTMLImageElement>('[data-full-screenshot]');
+  const caption = viewer?.querySelector<HTMLElement>('[data-screenshot-caption]');
+  document.querySelectorAll<HTMLButtonElement>('[data-shot-zoom]').forEach((button) => {
+    if (!viewer || !image) return;
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      const source = button.dataset.shotZoom;
+      if (!source) return;
+      image.src = source;
+      image.alt = button.dataset.shotAlt ?? 'Captura de Klassia';
+      viewer.dataset.portrait = button.dataset.shotPhone;
+      if (caption) caption.textContent = image.alt;
+      viewer.showModal();
+    });
+  });
+  viewer?.addEventListener('click', (event) => { if (event.target === viewer) viewer.close(); });
+</script>
+<style is:global>
+  .shot { position: relative; }
+  .shot-zoom { position: absolute; right: 10px; top: 47px; z-index: 4; display: grid; place-items: center; width: 35px; height: 35px; border: 1px solid #d8e5e7; border-radius: 9px; background: #fffef9ee; color: #173942; box-shadow: 0 3px 10px #17394212; }
+  .shot:not(.shot-chrome) .shot-zoom { top: 12px; }
+  .shot-phone .shot-zoom { top: auto !important; bottom: 23px; right: 17px; }
+  .shot-zoom:hover { background: #d7ee78; }
+  .screenshot-viewer { width: min(1480px, calc(100% - 32px)); max-height: 92dvh; padding: 0; border: 0; border-radius: 16px; background: #fffef9; color: #173942; box-shadow: 0 30px 100px #0005; }
+  .screenshot-viewer::backdrop { background: #102c35ce; backdrop-filter: blur(7px); }
+  .screenshot-viewer form { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; }
+  .screenshot-viewer form p { font-size: .64rem; font-weight: 800; letter-spacing: .12em; }
+  .screenshot-viewer button { border: 0; border-radius: 9px; background: #e4efee; min-height: 40px; padding: 0 14px; font-size: .8rem; font-weight: 700; }
+  .screenshot-viewer button span { margin-left: 10px; font-size: 22px; }
+  .screenshot-scroll { overflow: auto; max-height: 72dvh; background: #eef4f6; }
+  .screenshot-scroll img { width: 100%; height: auto; max-height: 72dvh; object-fit: contain; }
+  .screenshot-viewer[data-portrait='true'] { width: min(450px, calc(100% - 32px)); }
+  .screenshot-caption { padding: 13px 20px; font-size: .74rem; }
+  .screenshot-pan-hint { display: none; padding: 12px 20px 0; font-size: .7rem; color: #51656a; }
+  @media (max-width: 700px) {
+    .shot-zoom { width: 44px; height: 44px; }
+    .screenshot-scroll img { min-width: 850px; max-height: none; }
+    .screenshot-viewer[data-portrait='true'] .screenshot-scroll img { min-width: 0; }
+    .screenshot-viewer:not([data-portrait='true']) .screenshot-pan-hint { display: block; }
+  }
+  body:has(.screenshot-viewer[open]) { overflow: hidden; }
+</style>

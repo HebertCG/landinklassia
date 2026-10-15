@@ -18,7 +18,36 @@ npm run build
 npm run preview
 ```
 
-El build genera 15 rutas estáticas dentro de `dist/`.
+El build genera 17 páginas estáticas dentro de `dist/`, incluida la página 404.
+
+### Rediseño visual
+
+La versión previa al rediseño está guardada en el commit `9cce7a1`.
+Se conservan el logo, los seis módulos, la información comercial y legal, las capturas reales
+y los enlaces de contacto. La estructura se reconstruyó como un recorrido ilustrado: portada,
+escena de conexiones, vistas por rol ligadas al scroll, explorador desplegable de módulos,
+escena móvil y Klassia en vivo. Usa celeste, lima, coral y lavanda. Incluye paginación entre módulos
+y un visor ampliable de capturas. Las animaciones respetan
+`prefers-reduced-motion`; las tres experiencias permanecen visibles cuando JavaScript está deshabilitado.
+
+Para repetir la revisión de interfaz, inicia la compilación local en una terminal:
+
+```bash
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4322
+```
+
+En otra terminal ejecuta `npm run audit:ui`. Usa el `playwright-core` ya instalado y Microsoft Edge
+en modo headless; `UI_AUDIT_BROWSER` permite elegir otro canal instalado y `UI_AUDIT_URL` cambia
+la dirección de prueba. Revisa las páginas en escritorio y móvil, los controles por teclado,
+el visor de imágenes, cookies, navegación, recuperación 404, movimiento reducido y contenido sin
+JavaScript. El recorrido ligado al scroll solo se activa en pantallas de al menos 1100 × 760 px
+sin movimiento reducido; en el resto se usan pestañas y botones. Las capturas, trazas y resultados
+quedan en `screenshots/` (ignorado por Git).
+Esta comprobación no sustituye una revisión en Safari o Firefox.
+
+La ilustración se generó con Imagegen y se sirve como WebP con transparencia (208 KB).
+Su dirección artística y prompt están en `docs/visual-design.md`.
 
 ## Cloudflare Workers
 
@@ -70,4 +99,5 @@ PUBLIC_WHATSAPP_URL=https://wa.me/51989453142?text=Hola%2C%20quiero%20solicitar%
 | `npm run build` | Validación y build estático de producción |
 | `npm run deploy` | Despliegue del directorio `dist` mediante Workers Static Assets |
 | `npm run audit:seo` | Build y auditoría técnica de indexabilidad, metadatos, sitemap y enlaces |
+| `npm run audit:ui` | Pruebas de interfaz contra la vista previa local en el puerto 4322 |
 | `npm run preview` | Vista previa del directorio generado |

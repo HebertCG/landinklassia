@@ -1,0 +1,22 @@
+---
+import { modules } from '../data/modules';
+import Shot from './Shot.astro';
+import Icon from './Icon.astro';
+interface Props { detailed?: boolean; }
+const { detailed = false } = Astro.props;
+---
+<div class="module-explorer" role="region" aria-label="Módulos de Klassia">
+  {modules.map((item, i) => <details class={`module-detail tone-${item.tone}`} open={i === 0}>
+    <summary><span class="module-index">0{i + 1}</span><h3>{item.name}</h3><span class="module-tagline">{item.tagline}</span><span class="module-toggle" aria-hidden="true">+</span></summary>
+    <div class="module-detail-body">
+      <div class="module-detail-copy">
+        <p class="eyebrow">{item.eyebrow}</p>
+        <p>{item.summary}</p>
+        <ul class="module-points">{item.bullets.map((point) => <li>{point}</li>)}</ul>
+        {detailed && <ul class="feature-list">{item.capabilities.map((capability) => <li><Icon name="check" size={16} /><span><b>{capability.title}.</b> {capability.text}</span></li>)}</ul>}
+        <a class="text-link" href={`/plataforma/${item.slug}/`}>Explorar {item.name.toLowerCase()} <Icon name="arrow" size={18} /></a>
+      </div>
+      <Shot shot={item.shot} alt={item.shotAlt} width={item.shotWidth} height={item.shotHeight} />
+    </div>
+  </details>)}
+</div>

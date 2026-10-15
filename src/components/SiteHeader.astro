@@ -98,12 +98,16 @@ const { active } = Astro.props;
     const open = menuButton.getAttribute('aria-expanded') === 'true';
     menuButton.setAttribute('aria-expanded', String(!open));
     menu?.classList.toggle('open', !open);
+    const label = menuButton.querySelector('.sr-only');
+    if (label) label.textContent = open ? 'Abrir menú' : 'Cerrar menú';
   });
 
   menu?.querySelectorAll('a').forEach((link) =>
     link.addEventListener('click', () => {
       menuButton?.setAttribute('aria-expanded', 'false');
       menu.classList.remove('open');
+      const label = menuButton?.querySelector('.sr-only');
+      if (label) label.textContent = 'Abrir menú';
     })
   );
 
@@ -143,7 +147,17 @@ const { active } = Astro.props;
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setDropdown(false);
+    if (event.key !== 'Escape') return;
+    if (dropdownButton?.getAttribute('aria-expanded') === 'true') {
+      setDropdown(false);
+      dropdownButton.focus();
+    } else if (menuButton?.getAttribute('aria-expanded') === 'true') {
+      menuButton.setAttribute('aria-expanded', 'false');
+      menu?.classList.remove('open');
+      const label = menuButton.querySelector('.sr-only');
+      if (label) label.textContent = 'Abrir menú';
+      menuButton.focus();
+    }
   });
 
   document.addEventListener('click', (event) => {

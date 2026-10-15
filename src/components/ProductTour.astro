@@ -1,0 +1,104 @@
+---
+import Icon from './Icon.astro';
+import Shot from './Shot.astro';
+interface Role {
+  eyebrow: string;
+  title: string;
+  text: string;
+  points: string[][];
+  shot: string;
+  alt: string;
+  w: number;
+  h: number;
+}
+interface Props { roles: Role[]; }
+const { roles } = Astro.props;
+---
+<section class="product-tour" id="experiencias" data-product-tour>
+  <div class="container tour-heading"><p class="eyebrow">UN EQUIPO. TRES FORMAS DE AVANZAR.</p><h2>Cada persona,<br /><em>en su elemento.</em></h2><p>La misma información. La experiencia correcta. Nadie debería aprender a usar el sistema entero para hacer su parte. Cada rol entra a lo que necesita.</p></div>
+  <div class="tour-runway" data-tour-runway>
+    <div class="tour-sticky">
+      <div class="tour-orb" aria-hidden="true"></div><span class="tour-spark" aria-hidden="true">✳</span>
+      <div class="container tour-controls">
+        <div class="tour-tabs" aria-label="Experiencias de Klassia" data-tour-tabs hidden>
+          {roles.map((role, i) => <button type="button" id={`role-tab-${i}`} data-tour-tab aria-controls={`role-panel-${i}`}><span>0{i + 1}</span>{role.eyebrow}</button>)}
+        </div>
+        <span class="tour-scroll-label">SIGUE BAJANDO PARA EXPLORAR ↓</span>
+      </div>
+      <div class="container tour-panels">
+        {roles.map((role, i) => <article class={`tour-panel tour-tone-${i}`} id={`role-panel-${i}`} data-tour-panel>
+          <div class="tour-screen"><span class="screen-label">KLASSIA / {role.eyebrow.toUpperCase()} <span>VISTA REAL DEL SISTEMA ↗</span></span><Shot shot={role.shot} alt={role.alt} width={role.w} height={role.h} /></div>
+          <div class="tour-copy"><p class="eyebrow">0{i + 1} / {role.eyebrow}</p><h3>{role.title}</h3><p>{role.text}</p><ul class="feature-list">{role.points.map(([title, text]) => <li><Icon name="check" size={16} /><span><b>{title}.</b> {text}</span></li>)}</ul></div>
+        </article>)}
+      </div>
+      <div class="container tour-pagination" data-tour-pagination hidden><span>La información fluye. Tu equipo avanza.</span><div><button type="button" aria-label="Experiencia anterior" data-tour-prev>←</button><span data-tour-count aria-live="polite" aria-atomic="true">01 / 03</span><button type="button" aria-label="Experiencia siguiente" data-tour-next>→</button></div></div>
+      <div class="tour-progress" aria-hidden="true"><span></span></div>
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-product-tour]').forEach((tour) => {
+    const tabs = Array.from(tour.querySelectorAll<HTMLButtonElement>('[data-tour-tab]'));
+    const panels = Array.from(tour.querySelectorAll<HTMLElement>('[data-tour-panel]'));
+    const tablist = tour.querySelector<HTMLElement>('[data-tour-tabs]');
+    const pagination = tour.querySelector<HTMLElement>('[data-tour-pagination]');
+    const count = tour.querySelector<HTMLElement>('[data-tour-count]');
+    const runway = tour.querySelector<HTMLElement>('[data-tour-runway]');
+    if (!tabs.length || tabs.length !== panels.length || !tablist || !pagination || !runway) return;
+    const sceneMedia = matchMedia('(min-width: 1100px) and (min-height: 760px) and (prefers-reduced-motion: no-preference)');
+    let active = -1;
+    const select = (index: number, focus = false, fromScroll = false): void => {
+      const next = (index + tabs.length) % tabs.length;
+      if (active !== next) {
+        active = next;
+        tabs.forEach((tab, i) => { tab.setAttribute('aria-selected', String(i === active)); tab.tabIndex = i === active ? 0 : -1; });
+        panels.forEach((panel, i) => { panel.hidden = i !== active; });
+        tour.dataset.active = String(active);
+        if (count) count.textContent = `${String(active + 1).padStart(2, '0')} / ${String(tabs.length).padStart(2, '0')}`;
+      }
+      if (focus) tabs[active]?.focus({ preventScroll: true });
+      if (!fromScroll && sceneMedia.matches) {
+        const start = runway.getBoundingClientRect().top + window.scrollY;
+        const range = runway.offsetHeight - innerHeight;
+        window.scrollTo({ top: start + range * (active + 0.1) / tabs.length, behavior: 'instant' });
+      }
+    };
+    tablist.setAttribute('role', 'tablist');
+    tabs.forEach((tab, i) => {
+      tab.setAttribute('role', 'tab');
+      const panel = panels[i];
+      panel?.setAttribute('role', 'tabpanel');
+      panel?.setAttribute('aria-labelledby', tab.id);
+      if (panel) panel.tabIndex = 0;
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (event) => {
+        const next = { ArrowRight: active + 1, ArrowLeft: active - 1, Home: 0, End: tabs.length - 1 }[event.key];
+        if (next === undefined) return;
+        event.preventDefault(); select(next, true);
+      });
+    });
+    tour.querySelector('[data-tour-prev]')?.addEventListener('click', () => select(active - 1));
+    tour.querySelector('[data-tour-next]')?.addEventListener('click', () => select(active + 1));
+    const updateMode = (): void => { tour.classList.toggle('is-scroll-story', sceneMedia.matches); };
+    let pending = false;
+    const updateScroll = (): void => {
+      pending = false;
+      if (!sceneMedia.matches) return;
+      const rect = runway.getBoundingClientRect();
+      if (rect.top > 0 || rect.bottom < innerHeight) return;
+      const progress = Math.min(1, Math.max(0, -rect.top / (runway.offsetHeight - innerHeight)));
+      tour.style.setProperty('--tour-progress', String(progress));
+      tour.style.setProperty('--tour-turn', `${progress * 95 - 25}deg`);
+      // Avoid hiding a focused control or changing an expanded screenshot during exploration.
+      if (panels[active]?.contains(document.activeElement) || document.querySelector('dialog[open]')) return;
+      select(Math.min(tabs.length - 1, Math.floor(progress * tabs.length)), false, true);
+    };
+    const requestUpdate = (): void => { if (!pending) { pending = true; requestAnimationFrame(updateScroll); } };
+    sceneMedia.addEventListener('change', () => { updateMode(); requestUpdate(); });
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
+    select(0, false, true);
+    tablist.hidden = false; pagination.hidden = false;
+    updateMode(); requestUpdate();
+  });
+</script>

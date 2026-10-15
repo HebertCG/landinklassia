@@ -1,7 +1,8 @@
 <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
 
 <script>
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reducedMotion = motionPreference.matches;
   const revealTargets = new Set<HTMLElement>();
 
   const addReveal = (element: Element | null, direction = 'up', delay = 0) => {
@@ -11,13 +12,8 @@
     revealTargets.add(element);
   };
 
-  document.querySelectorAll<HTMLElement>('.hero-copy > *').forEach((item, index) =>
-    addReveal(item, 'up', index * 90)
-  );
-  addReveal(document.querySelector('.collage'), 'up', 260);
-
   document.querySelectorAll<HTMLElement>(
-    '.section-head, .sub-hero-copy, .photo-hero .sub-hero-copy, .legal-hero .legal-shell, .principles, .compare, .cta-card'
+    '.section-head, .sub-hero-copy, .photo-hero .sub-hero-copy, .legal-hero .legal-shell, .principles, .compare, .cta-card, .about-hero-copy, .about-hero-photo, .about-impact-copy, .about-impact-photo, .connection-statement, .tour-heading, .modules-heading, .pocket-heading, .pocket-copy, .live-copy, .live-product, .made-layout, .trust-layout, .closing-scene h2'
   ).forEach((item) => addReveal(item));
 
   document.querySelectorAll<HTMLElement>('.feature-row').forEach((row) => {
@@ -34,7 +30,7 @@
 
   const staggeredGroups = [
     '.module-grid', '.stats', '.steps', '.security-grid', '.alt-grid', '.capability-grid',
-    '.module-nav', '.replaces', '.footer-grid'
+    '.module-nav', '.replaces', '.footer-grid', '.about-values', '.connection-principles', '.fact-line'
   ];
 
   staggeredGroups.forEach((selector) => {
@@ -66,11 +62,33 @@
   }
 
   const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
+  const heroScene = document.querySelector<HTMLElement>('[data-hero-scene]');
+  const phoneScene = document.querySelector<HTMLElement>('[data-phone-scene]');
+  const connection = document.querySelector<HTMLElement>('.connection-diagram');
   let ticking = false;
   const updateProgress = () => {
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const value = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
     progress?.style.setProperty('--scroll-progress', String(value));
+    if (!motionPreference.matches) {
+      if (heroScene && heroScene.getBoundingClientRect().bottom > 0) {
+        heroScene.style.setProperty('--hero-shift', `${-Math.min(window.scrollY * 0.16, 160)}px`);
+        heroScene.style.setProperty('--art-shift', `${Math.min(window.scrollY * 0.10, 90)}px`);
+        heroScene.style.setProperty('--art-turn', `${Math.min(window.scrollY * 0.008, 7)}deg`);
+        heroScene.style.setProperty('--decor-turn', `${window.scrollY * 0.08 + 12}deg`);
+      }
+      if (phoneScene) {
+        const rect = phoneScene.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const phase = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+          phoneScene.style.setProperty('--phone-turn', `${phase * 18 - 12}deg`);
+        }
+      }
+      if (connection) {
+        const rect = connection.getBoundingClientRect();
+        if (rect.top < innerHeight && rect.bottom > 0) connection.style.setProperty('--connection-turn', `${(innerHeight - rect.top) * 0.07}deg`);
+      }
+    }
     ticking = false;
   };
   const requestProgress = () => {
@@ -81,4 +99,11 @@
   updateProgress();
   window.addEventListener('scroll', requestProgress, { passive: true });
   window.addEventListener('resize', requestProgress, { passive: true });
+  motionPreference.addEventListener('change', () => {
+    ['--hero-shift', '--art-shift', '--art-turn', '--decor-turn'].forEach((name) => heroScene?.style.removeProperty(name));
+    phoneScene?.style.removeProperty('--phone-turn');
+    connection?.style.removeProperty('--connection-turn');
+    if (motionPreference.matches) revealTargets.forEach((item) => item.dataset.revealed = 'true');
+    requestProgress();
+  });
 </script>
