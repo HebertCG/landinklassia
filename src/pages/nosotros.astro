@@ -1,6 +1,7 @@
 ---
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
+import SectionWave from '../components/SectionWave.astro';
 import { WHATSAPP_URL } from '../config/contact';
 ---
 
@@ -10,16 +11,12 @@ import { WHATSAPP_URL } from '../config/contact';
   path="/nosotros/"
   active="about"
   schemaType="AboutPage"
-  image="/brand/klassia-purpose-1600.webp"
-  imageAlt="Profesionales de educación planificando juntos con apoyo de tecnología"
+  image="/brand/klassia-teamwork.webp"
+  imageAlt="Ilustración de un equipo construyendo una gestión académica conectada"
 >
   <section class="about-hero">
     <div class="container about-hero-grid">
       <div class="about-hero-copy">
-        <nav class="breadcrumb" aria-label="Migas de pan">
-          <a href="/">Inicio</a><Icon name="arrow" size={13} /><span>Sobre nosotros</span>
-        </nav>
-        <p class="eyebrow">Sobre Klassia</p>
         <h1>Tecnología que ordena la gestión para devolverle tiempo a la educación.</h1>
         <p class="lead">
           Klassia es una plataforma de gestión académica creada para conectar la operación, la
@@ -27,47 +24,27 @@ import { WHATSAPP_URL } from '../config/contact';
         </p>
       </div>
 
-      <figure class="about-hero-photo">
-        <picture>
-          <source
-            srcset="/brand/klassia-purpose-800.webp 800w, /brand/klassia-purpose-1600.webp 1600w"
-            sizes="(max-width: 860px) calc(100vw - 40px), 50vw"
-            type="image/webp"
-          />
-          <img
-            src="/brand/klassia-purpose-1600.webp"
-            width="1600"
-            height="899"
-            alt="Dos profesionales de educación revisan la planificación académica en una laptop"
-            fetchpriority="high"
-          />
-        </picture>
-      </figure>
+      <figure class="editorial-art about-hero-art"><img src="/brand/klassia-teamwork.webp" width="1536" height="1024" alt="Ilustración de un equipo conectando las piezas de una plataforma educativa" fetchpriority="high" /></figure>
     </div>
   </section>
 
-  <section class="section about-purpose">
-    <div class="container about-purpose-grid">
-      <div class="section-head">
-        <p class="eyebrow">Nuestro propósito</p>
-        <h2>Hacer que cada academia pueda enfocarse en lo que realmente importa: <em>formar.</em></h2>
+  <section class="connection-story" id="conecta" aria-labelledby="connection-title">
+    <SectionWave />
+    <div class="connection-top container"><p class="eyebrow">DE LO DISPERSO A LO CONECTADO</p><span class="tiny-label">EL CAMBIO EMPIEZA AQUÍ ↙</span></div>
+    <div class="container connection-layout">
+      <div class="connection-statement">
+        <h2 id="connection-title">La información<br />ya existe.<br /><span>Hagamos que</span><br /><em>trabaje unida.</em></h2>
+        <p>El padrón está en una hoja de cálculo, la asistencia en un cuaderno, las separatas en un grupo de WhatsApp y las notas en otro archivo. Cada vez que alguien necesita entender cómo va un alumno, hay que reconstruir su historia a mano.</p>
       </div>
-      <div class="about-purpose-copy">
-        <p>
-          Cuando la información está dispersa, administrar consume tiempo que debería dedicarse a
-          acompañar a docentes y estudiantes. Nuestro propósito es convertir esa complejidad en una
-          operación clara, confiable y fácil de seguir.
-        </p>
-        <p>
-          Por eso reunimos alumnos, horarios, asistencia, contenido, evaluaciones y reportes en un
-          mismo sistema. Cada dato conserva su contexto y cada persona encuentra solo lo que necesita
-          para avanzar.
-        </p>
+      <div class="connection-brand" data-brand-scene>
+        <img class="connection-logo" src="/brand/klassia-mark.svg" width="340" height="340" alt="Klassia" />
+        <div class="connection-caption"><p>Todo comparte contexto.</p><span>Matrícula · Aula · Seguimiento</span></div>
       </div>
     </div>
   </section>
 
   <section class="section about-principles">
+    <SectionWave />
     <div class="container">
       <div class="section-head centered">
         <p class="eyebrow">Cómo construimos</p>
@@ -102,22 +79,7 @@ import { WHATSAPP_URL } from '../config/contact';
 
   <section class="section about-impact">
     <div class="container about-impact-grid">
-      <figure class="about-impact-photo">
-        <picture>
-          <source
-            srcset="/brand/klassia-impact-800.webp 800w, /brand/klassia-impact-1600.webp 1600w"
-            sizes="(max-width: 860px) calc(100vw - 40px), 50vw"
-            type="image/webp"
-          />
-          <img
-            src="/brand/klassia-impact-1600.webp"
-            width="1600"
-            height="899"
-            alt="Docente acompaña a estudiantes preuniversitarios durante una actividad académica"
-            loading="lazy"
-          />
-        </picture>
-      </figure>
+      <figure class="editorial-art"><img src="/brand/klassia-academy.webp" width="1536" height="1024" alt="Ilustración de un docente acompañando el aprendizaje de sus estudiantes" loading="lazy" /></figure>
 
       <div class="about-impact-copy">
         <p class="eyebrow">La educación que queremos impulsar</p>

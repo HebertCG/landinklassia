@@ -13,7 +13,8 @@ No se añadieron clientes, testimonios, cifras de adopción ni funciones del pro
 ## Movimiento y accesibilidad
 
 - Entrada de título e ilustración; capas de la portada con desplazamiento y rotación ligados al scroll.
-- Diagrama de conexión con órbita que responde al desplazamiento.
+- Ilustración completa dentro del flujo de la portada, con espacio inferior para evitar recortes al desplazarse.
+- Logo de Klassia a gran escala con inclinación y desplazamiento suaves al hacer scroll; sin órbitas ni tarjetas flotantes. Respeta la preferencia de movimiento reducido.
 - Escena de producto fija durante tres capítulos en escritorio; pestañas, flechas y teclado disponibles.
 - En móvil, ventanas bajas o movimiento reducido, navegación directa sin escena fijada.
 - El teléfono rota suavemente con el desplazamiento. Los módulos se abren con controles nativos.

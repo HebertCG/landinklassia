@@ -2,6 +2,7 @@
 import MarketingLayout from '../layouts/MarketingLayout.astro';
 import Icon from '../components/Icon.astro';
 import Shot from '../components/Shot.astro';
+import SectionWave from '../components/SectionWave.astro';
 import { WHATSAPP_URL } from '../config/contact';
 
 const steps = [
@@ -29,19 +30,10 @@ const steps = [
   active="academies"
   path="/para-academias/"
 >
-  <section class="photo-hero">
-    <picture>
-      <source media="(max-width: 700px)" srcset="/brand/klassia-students-800.webp" />
-      <img
-        src="/brand/klassia-students-1600.webp"
-        width="1600"
-        height="858"
-        alt="Estudiantes y docente trabajando en el aula de una academia preuniversitaria"
-      />
-    </picture>
-    <div class="container">
+  <section class="academy-hero">
+    <div class="container illustrated-layout">
       <div class="sub-hero-copy">
-        <p class="eyebrow eyebrow-light">Para academias preuniversitarias</p>
+        <p class="eyebrow">Para academias preuniversitarias</p>
         <h1>Una operación clara deja más espacio para <em>enseñar.</em></h1>
         <p class="lead">
           Klassia no es un software corporativo adaptado al aula. Está diseñada alrededor de los
@@ -53,10 +45,12 @@ const steps = [
           </a>
         </div>
       </div>
+      <figure class="editorial-art academy-art"><img src="/brand/klassia-academy.webp" width="1536" height="1024" alt="Ilustración de un docente acompañando a dos estudiantes con libros y una laptop" fetchpriority="high" /></figure>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section academy-start">
+    <SectionWave />
     <div class="container">
       <div class="section-head centered">
         <p class="eyebrow">Cómo empieza</p>
@@ -155,17 +149,8 @@ const steps = [
   <section class="section-tight" style="background: var(--page);">
     <div class="container">
       <div class="story-grid">
-        <figure class="story-photo">
-          <picture>
-            <source media="(max-width: 700px)" srcset="/brand/klassia-team-800.webp" />
-            <img
-              src="/brand/klassia-team-1600.webp"
-              width="1600"
-              height="1000"
-              alt="Coordinadora y docente revisando el avance de sus estudiantes"
-              loading="lazy"
-            />
-          </picture>
+        <figure class="editorial-art">
+          <img src="/brand/klassia-teamwork.webp" width="1536" height="1024" alt="Ilustración de un equipo conectando las piezas de su gestión académica" loading="lazy" />
         </figure>
         <div class="feature-copy">
           <p class="eyebrow">Tu identidad, no la nuestra</p>

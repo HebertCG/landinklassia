@@ -1,5 +1,3 @@
-<div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
-
 <script>
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const reducedMotion = motionPreference.matches;
@@ -30,7 +28,7 @@
 
   const staggeredGroups = [
     '.module-grid', '.stats', '.steps', '.security-grid', '.alt-grid', '.capability-grid',
-    '.module-nav', '.replaces', '.footer-grid', '.about-values', '.connection-principles', '.fact-line'
+    '.module-nav', '.replaces', '.footer-grid', '.about-values', '.fact-line'
   ];
 
   staggeredGroups.forEach((selector) => {
@@ -61,20 +59,16 @@
     revealTargets.forEach((item) => observer.observe(item));
   }
 
-  const progress = document.querySelector<HTMLElement>('[data-scroll-progress]');
   const heroScene = document.querySelector<HTMLElement>('[data-hero-scene]');
   const phoneScene = document.querySelector<HTMLElement>('[data-phone-scene]');
-  const connection = document.querySelector<HTMLElement>('.connection-diagram');
+  const connection = document.querySelector<HTMLElement>('[data-brand-scene]');
   let ticking = false;
-  const updateProgress = () => {
-    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-    const value = scrollable > 0 ? Math.min(Math.max(window.scrollY / scrollable, 0), 1) : 0;
-    progress?.style.setProperty('--scroll-progress', String(value));
+  const updateMotion = () => {
     if (!motionPreference.matches) {
       if (heroScene && heroScene.getBoundingClientRect().bottom > 0) {
-        heroScene.style.setProperty('--hero-shift', `${-Math.min(window.scrollY * 0.16, 160)}px`);
-        heroScene.style.setProperty('--art-shift', `${Math.min(window.scrollY * 0.10, 90)}px`);
-        heroScene.style.setProperty('--art-turn', `${Math.min(window.scrollY * 0.008, 7)}deg`);
+        heroScene.style.setProperty('--hero-shift', `${-Math.min(window.scrollY * 0.30, 240)}px`);
+        heroScene.style.setProperty('--art-shift', `${-Math.min(window.scrollY * 0.035, 28)}px`);
+        heroScene.style.setProperty('--art-turn', `${Math.min(window.scrollY * 0.003, 2)}deg`);
         heroScene.style.setProperty('--decor-turn', `${window.scrollY * 0.08 + 12}deg`);
       }
       if (phoneScene) {
@@ -86,24 +80,28 @@
       }
       if (connection) {
         const rect = connection.getBoundingClientRect();
-        if (rect.top < innerHeight && rect.bottom > 0) connection.style.setProperty('--connection-turn', `${(innerHeight - rect.top) * 0.07}deg`);
+        if (rect.top < innerHeight && rect.bottom > 0) {
+          const phase = Math.min(1, Math.max(0, (innerHeight - rect.top) / (innerHeight + rect.height)));
+          connection.style.setProperty('--logo-turn', `${phase * 12 - 6}deg`);
+          connection.style.setProperty('--logo-rise', `${16 - phase * 32}px`);
+        }
       }
     }
     ticking = false;
   };
-  const requestProgress = () => {
+  const requestMotion = () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(updateProgress);
+    requestAnimationFrame(updateMotion);
   };
-  updateProgress();
-  window.addEventListener('scroll', requestProgress, { passive: true });
-  window.addEventListener('resize', requestProgress, { passive: true });
+  updateMotion();
+  window.addEventListener('scroll', requestMotion, { passive: true });
+  window.addEventListener('resize', requestMotion, { passive: true });
   motionPreference.addEventListener('change', () => {
     ['--hero-shift', '--art-shift', '--art-turn', '--decor-turn'].forEach((name) => heroScene?.style.removeProperty(name));
     phoneScene?.style.removeProperty('--phone-turn');
-    connection?.style.removeProperty('--connection-turn');
+    ['--logo-turn', '--logo-rise'].forEach((name) => connection?.style.removeProperty(name));
     if (motionPreference.matches) revealTargets.forEach((item) => item.dataset.revealed = 'true');
-    requestProgress();
+    requestMotion();
   });
 </script>

@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import Shot from './Shot.astro';
+import SectionWave from './SectionWave.astro';
 interface Role {
   eyebrow: string;
   title: string;
@@ -15,6 +16,7 @@ interface Props { roles: Role[]; }
 const { roles } = Astro.props;
 ---
 <section class="product-tour" id="experiencias" data-product-tour>
+  <SectionWave />
   <div class="container tour-heading"><p class="eyebrow">UN EQUIPO. TRES FORMAS DE AVANZAR.</p><h2>Cada persona,<br /><em>en su elemento.</em></h2><p>La misma información. La experiencia correcta. Nadie debería aprender a usar el sistema entero para hacer su parte. Cada rol entra a lo que necesita.</p></div>
   <div class="tour-runway" data-tour-runway>
     <div class="tour-sticky">

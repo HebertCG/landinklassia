@@ -1,5 +1,5 @@
 /* The opening scene is a single illustration-led composition, not a card layout. */
-.hero { background: #f8f8ef; position: relative; isolation: isolate; overflow: clip; padding-top: 70px; }
+.hero { background: #f8f8ef; position: relative; isolation: isolate; overflow: clip; padding-top: 70px; padding-bottom: 40px; }
 .hero-title-wrap { position: relative; z-index: 3; text-align: center; display: grid; justify-items: center; gap: 23px; width: min(1040px, calc(100% - 40px)); margin: 0 auto; }
 .hero-title-wrap .eyebrow { display: flex; align-items: center; gap: 9px; }
 .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
@@ -7,9 +7,9 @@
 .hero h1 em { font-style: normal; color: #087a9e; }
 .hero-lead { color: #445d62; font-size: 1rem; max-width: 530px; line-height: 1.7; }
 .hero-cta { margin-top: 2px; }
-.hero-scene { position: relative; height: clamp(440px, 39vw, 620px); margin-top: -20px; }
+.hero-scene { position: relative; margin-top: 12px; padding: 20px 0 75px; }
 .hero-planet { position: absolute; width: 135%; height: 150%; left: -17.5%; top: 31%; background: #78d8f7; border-radius: 50% 50% 0 0; transform: translateY(var(--hero-shift, 0px)); }
-.hero-illustration { position: absolute; width: min(860px, 72vw); height: 100%; object-fit: contain; left: 50%; bottom: -7%; transform: translate(-50%, var(--art-shift, 0px)) rotate(var(--art-turn, 0deg)); transform-origin: 50% 85%; z-index: 2; }
+.hero-illustration { position: relative; display: block; width: min(860px, 72vw); height: auto; margin-inline: auto; transform: translateY(var(--art-shift, 0px)) rotate(var(--art-turn, 0deg)); transform-origin: 50% 85%; z-index: 2; }
 .orbit-word { position: absolute; z-index: 1; font-size: clamp(3rem, 7vw, 8rem); font-weight: 800; color: #188cb322; letter-spacing: -.07em; }
 .orbit-word-left { left: -4%; top: 50%; transform: rotate(-38deg); }
 .orbit-word-right { right: -8%; top: 53%; transform: rotate(38deg); }
@@ -37,8 +37,8 @@
  .hero { padding-top: 60px; }
  .hero h1 { font-size: clamp(3.5rem, 9.6vw, 6.5rem); }
  .hero-lead { font-size: .9rem; max-width: 450px; }
- .hero-scene { height: 430px; margin-top: 15px; }
- .hero-illustration { width: 90%; bottom: -2%; }
+ .hero-scene { padding: 55px 0 80px; margin-top: 15px; }
+ .hero-illustration { width: 90%; }
  .hero-planet { width: 180%; left: -40%; top: 24%; }
  .star-one { font-size: 65px; left: 5%; }
  .star-two { font-size: 60px; right: 6%; top: 28%; }
@@ -52,8 +52,8 @@
  .hero-title-wrap { gap: 20px; }
  .hero h1 { font-size: clamp(2.9rem, 12vw, 4rem); }
  .hero-title-wrap .eyebrow { font-size: .53rem; letter-spacing: .08em; }
- .hero-scene { height: 350px; margin-top: 8px; }
- .hero-illustration { width: 113%; bottom: -1%; }
+ .hero-scene { padding: 70px 0 70px; margin-top: 8px; }
+ .hero-illustration { width: 94%; }
  .hero-note { top: 2%; left: 7%; }
  .hero-planet { top: 27%; }
  .star-one { left: auto; right: 10%; font-size: 53px; top: 3%; }
@@ -63,4 +63,4 @@
  .round-scroll span:first-child { font-size: .47rem; }
  .round-scroll span:last-child { font-size: 25px; }
 }
-@media (prefers-reduced-motion: reduce) { .hero-illustration { transform: translateX(-50%); } .hero-planet { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-illustration, .hero-planet { transform: none; } }
