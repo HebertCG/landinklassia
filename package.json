@@ -13,6 +13,7 @@
     "deploy": "wrangler deploy",
     "audit:seo": "npm run build && node scripts/seo-audit.mjs",
     "audit:ui": "node scripts/ui-audit.mjs",
+    "audit:pricing": "node scripts/pricing-audit.mjs",
     "preview": "astro preview",
     "check": "astro check"
   },

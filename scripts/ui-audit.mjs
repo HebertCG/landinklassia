@@ -8,7 +8,7 @@ const results = [];
 await mkdir('screenshots', { recursive: true });
 const files = await readdir('dist', { recursive: true });
 const routes = files.filter((file) => /(^|[/\\])index.html$/.test(file)).map((file) => '/' + file.replaceAll('\\', '/').replace(/index.html$/, ''));
-assert.equal(routes.length, 16, 'Build must be complete before the UI audit starts');
+assert.equal(routes.length, 17, 'Build must be complete before the UI audit starts');
 const browser = await chromium.launch({ channel: process.env.UI_AUDIT_BROWSER || 'msedge', headless: true });
 
 class LandingPage {

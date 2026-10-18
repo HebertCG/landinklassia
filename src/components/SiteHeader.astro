@@ -4,7 +4,7 @@ import { WHATSAPP_URL } from '../config/contact';
 import Icon from './Icon.astro';
 
 interface Props {
-  active?: 'platform' | 'academies' | 'about' | 'comparison' | 'security';
+  active?: 'platform' | 'academies' | 'about' | 'comparison' | 'security' | 'pricing';
 }
 
 const { active } = Astro.props;
@@ -82,6 +82,8 @@ const { active } = Astro.props;
         class:list={['nav-link', active === 'security' && 'current']}
         href="/seguridad/">Seguridad</a
       >
+
+      <a class:list={['nav-link', active === 'pricing' && 'current']} aria-current={active === 'pricing' ? 'page' : undefined} href="/planes/">Planes</a>
 
       <a class="button button-small" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
         Solicitar demo

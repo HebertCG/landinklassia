@@ -18,7 +18,18 @@ npm run build
 npm run preview
 ```
 
-El build genera 17 páginas estáticas dentro de `dist/`, incluida la página 404.
+El build genera 18 páginas estáticas dentro de `dist/`, incluida la página 404.
+
+### Planes y almacenamiento
+
+Los precios, límites y funciones se mantienen en `src/data/plans.ts`. Inicio muestra un resumen
+y `/planes/` incluye los detalles, servicios próximos y un selector de plan con almacenamiento
+adicional. El total conserva «Desde» para el Plan Institucional. El contacto abre WhatsApp con
+la selección; no procesa pagos. Plus y combos se muestran como próximos y no se pueden contratar.
+
+Con el servidor local encendido en el puerto 4321, `npm run audit:pricing` verifica las doce
+combinaciones de plan y almacenamiento, precios y capacidades, navegación desde Inicio,
+teclado, vistas adaptables y contenido sin JavaScript. También admite `UI_AUDIT_URL`.
 
 ### Rediseño visual
 
@@ -100,4 +111,5 @@ PUBLIC_WHATSAPP_URL=https://wa.me/51989453142?text=Hola%2C%20quiero%20solicitar%
 | `npm run deploy` | Despliegue del directorio `dist` mediante Workers Static Assets |
 | `npm run audit:seo` | Build y auditoría técnica de indexabilidad, metadatos, sitemap y enlaces |
 | `npm run audit:ui` | Pruebas de interfaz contra la vista previa local en el puerto 4322 |
+| `npm run audit:pricing` | Pruebas de planes y almacenamiento contra el servidor local en el puerto 4321 |
 | `npm run preview` | Vista previa del directorio generado |
