@@ -4,14 +4,16 @@ interface Props { detailed?: boolean; }
 const { detailed = false } = Astro.props;
 ---
 <div class="plan-grid">
-  {plans.map((plan, i) => <article class={`plan-card plan-${plan.tone}`} style={`--plan-order: ${i}`}>
+  {plans.map((plan, i) => <article class:list={['plan-card', `plan-${plan.tone}`, plan.comingSoon && 'plan-upcoming']}>
+    {plan.comingSoon && <span class="plan-ribbon">Próximamente</span>}
     <span class="plan-index" aria-hidden="true">0{i + 1} /</span>
     <h3>{plan.name}</h3>
     <p class="plan-description">{plan.description}</p>
-    <p class="plan-price"><span class="price-prefix">{plan.from ? 'Desde' : 'Precio mensual'}</span><strong><small>S/</small>{plan.price}</strong><span>/ mes</span></p>
+    <p class="plan-price"><span class="price-prefix">IGV incluido</span><strong><small>S/</small>{plan.price}</strong><span>/ mes</span></p>
     <div class="plan-limits"><p>Hasta <b>{number(plan.students)}</b> alumnos activos</p><p><b>{storageLabel(plan.storageGB)}</b> de almacenamiento</p></div>
+    <p class="plan-subdomain">Subdominio propio para tu academia</p>
     <ul class="plan-highlights">{plan.highlights.map(text => <li>{text}</li>)}</ul>
-    <a class="plan-choose" href={detailed ? `#configura` : `/planes/?plan=${plan.id}#configura`} data-select-plan={detailed ? plan.id : undefined}>Elegir {plan.name}<span aria-hidden="true">↗</span></a>
-    {detailed && <details class="plan-details"><summary>Todo lo que incluye <span aria-hidden="true">+</span></summary><div>{plan.inherits && <p class="plan-inherits">Todo el Plan {plan.inherits}, más:</p>}<ul>{plan.features.map(text => <li>{text}</li>)}</ul></div></details>}
+    {plan.comingSoon ? <span class="plan-unavailable">Disponible próximamente</span> : <a class="plan-choose" href={detailed ? `#configura` : `/planes/?plan=${plan.id}#configura`} data-select-plan={detailed ? plan.id : undefined}>Elegir {plan.name}<span aria-hidden="true">↗</span></a>}
+    {detailed && <details class="plan-details"><summary>{plan.comingSoon ? 'Conoce el próximo plan' : 'Todo lo que incluye'} <span aria-hidden="true">+</span></summary><div>{plan.inherits && <p class="plan-inherits">Incluye todas las funciones del Plan {plan.inherits}.</p>}<ul>{plan.features.map(text => <li>{text}</li>)}</ul>{plan.upcomingFeatures && <div class="plan-roadmap"><p>Se incorporarán cuando estén disponibles:</p><ul>{plan.upcomingFeatures.map(text => <li>{text}</li>)}</ul></div>}</div></details>}
   </article>)}
 </div>

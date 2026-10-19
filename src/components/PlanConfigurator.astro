@@ -4,15 +4,16 @@ import { WHATSAPP_URL } from '../config/contact';
 ---
 <section class="plan-config-section" id="configura" aria-labelledby="config-title">
   <div class="container plan-config-layout">
-    <div><p class="eyebrow">A TU MEDIDA</p><h2 id="config-title">Tu plan.<br /><em>Un poco más de espacio.</em></h2><p>Todos los planes incluyen almacenamiento. Si necesitas más, elige una ampliación y revisa tu total mensual antes de conversar con nosotros.</p><p class="storage-rates">+100 GB · <b>S/25 al mes</b><br />+500 GB · <b>S/99 al mes</b></p></div>
+    <div><p class="eyebrow">A TU MEDIDA</p><h2 id="config-title">Tu plan.<br /><em>Un poco más de espacio.</em></h2><p>Todos los planes incluyen almacenamiento. Si necesitas más, elige una ampliación y revisa tu total mensual antes de conversar con nosotros.</p><p class="storage-rates">+100 GB · <b>S/25 al mes</b><br />+500 GB · <b>S/99 al mes</b><br /><small>IGV incluido en todos los importes.</small></p></div>
     <div class="plan-config" data-plan-config data-contact={WHATSAPP_URL} hidden>
       <label class="config-label" for="config-plan">1. Elige tu plan</label>
-      <select id="config-plan" name="plan">{plans.map(plan => <option value={plan.id}>{plan.name} · {plan.from ? 'desde ' : ''}S/{plan.price}/mes</option>)}</select>
+      <select id="config-plan" name="plan">{plans.filter(plan => !plan.comingSoon).map(plan => <option value={plan.id}>{plan.name} · S/{plan.price}/mes</option>)}</select>
+      <p class="config-help">Institucional estará disponible próximamente.</p>
       <fieldset><legend>2. Almacenamiento adicional</legend><div class="storage-options">{storageOptions.map((option, i) => <label><input type="radio" name="storage" value={option.id} checked={i === 0} /><span>{option.label}<small>{option.price ? `+ S/${option.price}/mes` : 'Sin costo adicional'}</small></span></label>)}</div></fieldset>
       <div class="config-summary" aria-live="polite" aria-atomic="true">
         <p data-config-description>Plan Inicial · Hasta {number(100)} alumnos activos</p>
         <p data-config-storage>100 GB de almacenamiento total</p>
-        <div class="config-total"><span>Total mensual</span><strong data-config-total>S/149<span>/mes</span></strong></div>
+        <div class="config-total"><span>Total mensual · IGV incluido</span><strong data-config-total>S/149<span>/mes</span></strong></div>
         <p class="config-breakdown" data-config-breakdown>Plan S/149 + almacenamiento adicional S/0</p>
       </div>
       <a class="button button-primary" data-config-contact href={WHATSAPP_URL} target="_blank" rel="noreferrer">Consultar mi selección <span class="button-arrow" aria-hidden="true">↗</span></a>
@@ -29,14 +30,14 @@ import { WHATSAPP_URL } from '../config/contact';
   if (config && select && contact && config.dataset.contact) {
     const contactBase = config.dataset.contact;
     const params = new URLSearchParams(location.search);
-    const requested = plans.find(plan => plan.id === params.get('plan'));
+    const requested = plans.find(plan => !plan.comingSoon && plan.id === params.get('plan'));
     if (requested) select.value = requested.id;
     const update = (): void => {
-      const plan = plans.find(item => item.id === select.value);
+      const plan = plans.find(item => !item.comingSoon && item.id === select.value);
       const chosen = config.querySelector<HTMLInputElement>('input[name="storage"]:checked');
       const storage = storageOptions.find(item => item.id === chosen?.value);
       if (!plan || !storage) return;
-      const total = `${plan.from ? 'Desde ' : ''}S/${number(plan.price + storage.price)}`;
+      const total = `S/${number(plan.price + storage.price)}`;
       const description = config.querySelector('[data-config-description]');
       const capacity = config.querySelector('[data-config-storage]');
       const amount = config.querySelector('[data-config-total]');
@@ -44,15 +45,15 @@ import { WHATSAPP_URL } from '../config/contact';
       if (description) description.textContent = `Plan ${plan.name} · Hasta ${number(plan.students)} alumnos activos`;
       if (capacity) capacity.textContent = `${storageLabel(plan.storageGB + storage.gb)} de almacenamiento total`;
       if (amount) amount.textContent = `${total}/mes`;
-      if (breakdown) breakdown.textContent = `Plan ${plan.from ? 'desde ' : ''}S/${plan.price} + almacenamiento adicional S/${storage.price}`;
+      if (breakdown) breakdown.textContent = `Plan S/${plan.price} + almacenamiento adicional S/${storage.price}`;
       const url = new URL(contactBase);
-      url.searchParams.set('text', `Hola, me interesa el Plan ${plan.name} de Klassia para hasta ${number(plan.students)} alumnos activos. Almacenamiento adicional: ${storage.label}. Total mensual: ${total}. Quisiera más información.`);
+      url.searchParams.set('text', `Hola, me interesa el Plan ${plan.name} de Klassia para hasta ${number(plan.students)} alumnos activos. Almacenamiento adicional: ${storage.label}. Total mensual: ${total} (IGV incluido). Quisiera más información.`);
       contact.href = url.href;
     };
     config.addEventListener('change', update);
     document.querySelectorAll<HTMLAnchorElement>('[data-select-plan]').forEach(link => {
       link.addEventListener('click', event => {
-        const plan = plans.find(item => item.id === link.dataset.selectPlan);
+        const plan = plans.find(item => !item.comingSoon && item.id === link.dataset.selectPlan);
         if (!plan) return;
         event.preventDefault(); select.value = plan.id; update();
         document.getElementById('configura')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });

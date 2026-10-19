@@ -24,11 +24,16 @@ El build genera 18 páginas estáticas dentro de `dist/`, incluida la página 40
 
 Los precios, límites y funciones se mantienen en `src/data/plans.ts`. Inicio muestra un resumen
 y `/planes/` incluye los detalles, servicios próximos y un selector de plan con almacenamiento
-adicional. El total conserva «Desde» para el Plan Institucional. El contacto abre WhatsApp con
-la selección; no procesa pagos. Plus y combos se muestran como próximos y no se pueden contratar.
+adicional. Todos los precios incluyen IGV. Institucional, Plus y combos se muestran como próximos
+y no se pueden contratar. El selector solo admite planes disponibles. El contacto abre WhatsApp
+con la selección; no procesa pagos. Todos los planes incluyen subdominio; la importación masiva
+empieza en Básico. La promoción del Plan Profesional gratis dura hasta el 31 de diciembre de 2026 inclusive,
+en horario de Perú. El contador usa el cierre absoluto `2027-01-01T00:00:00-05:00`,
+se recalcula cada segundo y muestra el estado finalizado al vencer. Sin JavaScript, se muestra
+la vigencia y un enlace para consultar la disponibilidad.
 
-Con el servidor local encendido en el puerto 4321, `npm run audit:pricing` verifica las doce
-combinaciones de plan y almacenamiento, precios y capacidades, navegación desde Inicio,
+Con el servidor local encendido en el puerto 4321, `npm run audit:pricing` verifica las nueve
+combinaciones de los planes disponibles y almacenamiento, precios y capacidades, navegación desde Inicio,
 teclado, vistas adaptables y contenido sin JavaScript. También admite `UI_AUDIT_URL`.
 
 ### Rediseño visual
