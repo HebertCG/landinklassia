@@ -4,6 +4,8 @@ import Icon from '../components/Icon.astro';
 import Shot from '../components/Shot.astro';
 import ProductTour from '../components/ProductTour.astro';
 import PricingPreview from '../components/PricingPreview.astro';
+import PromotionCountdown from '../components/PromotionCountdown.astro';
+import SectionWave from '../components/SectionWave.astro';
 import { WHATSAPP_URL } from '../config/contact';
 import ModuleExplorer from '../components/ModuleExplorer.astro';
 
@@ -76,6 +78,11 @@ const roles = [
     </div>
   </section>
 
+  <div class="home-promotion">
+    <SectionWave />
+    <div class="container"><PromotionCountdown /></div>
+  </div>
+
 <ProductTour roles={roles} />
 
   <section class="modules-section" id="plataforma">
@@ -118,3 +125,9 @@ const roles = [
     <div class="container"><p class="eyebrow">EL SIGUIENTE PASO ES CONVERSAR</p><h2>Tu próximo ciclo.<br /><em>Más conectado.</em><span aria-hidden="true">↗</span></h2><div class="closing-bottom"><p>Tu academia ya tiene un método. Klassia ayuda a conectarlo. Agenda una demostración guiada con los módulos que realmente usaría tu equipo, con el contexto de tu academia.</p><a class="button button-primary" href={WHATSAPP_URL} target="_blank" rel="noreferrer">Solicitar una demostración <span class="button-arrow">↗</span></a></div></div>
   </section>
 </MarketingLayout>
+
+<style>
+  .home-promotion { position: relative; --wave-color: #f8f8ef; background: var(--wave-color); padding-top: clamp(35px, 5vw, 65px); }
+  .home-promotion :global(.pricing-promo) { margin-bottom: 0; }
+  .home-promotion + :global(.product-tour .tour-heading) { padding-top: clamp(55px, 6vw, 85px); }
+</style>
