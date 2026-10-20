@@ -320,6 +320,7 @@ h1, h2 { text-wrap: initial; }
  .tour-heading > p:last-child, .modules-heading > p:last-child { justify-self: start; font-size: .85rem; }
  .tour-sticky { padding-block: 35px 40px; }
  .tour-orb { width: 120vw; height: 120vw; left: -30vw; top: -10vw; }
+ .tour-spark { display: none; }
  .tour-controls { margin-bottom: 35px; }
  .tour-tabs { width: 100%; gap: 4px; justify-content: space-between; }
  .tour-tabs button { flex: 1; padding: 10px 8px; min-height: 44px; justify-content: center; font-size: .67rem; gap: 5px; }
@@ -433,7 +434,7 @@ h1, h2 { text-wrap: initial; }
 .protection-section .principles h2 { margin-block: 7px; color: #142e37; }
 .protection-section .principles h2:nth-child(2) { color: #087a9e; }
 .protection-section .principles h2:nth-child(3) { color: #32657a; }
-.table-scroll { border: 2px solid #8ca5ad; border-radius: 18px; }
+.table-scroll { border: 2px solid #8ca5ad; border-radius: 18px; overflow: clip; }
 .compare thead th { background: #142e37; color: #fffef0; padding-block: 24px; border-bottom: 2px solid #8ca5ad; }
 .compare thead th:first-child { color: #fffef0; }
 .compare thead .col-klassia { background: #087a9e; color: #fff; }
@@ -451,6 +452,7 @@ h1, h2 { text-wrap: initial; }
  .illustrated-layout, .about-hero-grid { grid-template-columns: 1fr; gap: 40px; }
  .illustrated-layout .editorial-art, .about-hero-art { max-width: 580px; margin-inline: auto; }
  .about-hero-copy { text-align: center; justify-items: center; }
+ .compare caption { border-top: 0; border-bottom: 2px solid #8ca5ad; }
  .compare tbody tr + tr { border-top: 3px solid #8ca5ad; }
  .compare tbody td { border-top: 1px solid #c2cfd3; padding-block: 12px; }
  .compare tbody tr + tr td { border-top: 1px solid #c2cfd3; }

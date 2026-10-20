@@ -458,6 +458,7 @@
    viewport and shrink every glyph on the page. */
 @media (max-width: 979px) {
   .compare,
+  .compare caption,
   .compare tbody,
   .compare tbody tr,
   .compare tbody th,
