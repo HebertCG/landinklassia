@@ -16,6 +16,8 @@ interface Props {
   /** Present a mobile screenshot inside a phone frame */
   phone?: boolean;
   caption?: string;
+  /** Replace the static screenshot with a real demo video. Poster reuses the -1x screenshot. */
+  videoSrc?: string;
 }
 
 const {
@@ -27,10 +29,12 @@ const {
   eager = false,
   chrome = true,
   phone = false,
-  caption
+  caption,
+  videoSrc
 } = Astro.props;
 
 const half = Math.round(width / 2);
+const poster = `/product/${shot}-1x.webp`;
 ---
 
 <figure class:list={['shot', chrome && 'shot-chrome', phone && 'shot-phone']}>
@@ -42,17 +46,37 @@ const half = Math.round(width / 2);
       </div>
     )
   }
-  <img
-    src={`/product/${shot}-1x.webp`}
-    srcset={`/product/${shot}-1x.webp ${half}w, /product/${shot}.webp ${width}w`}
-    sizes={sizes}
-    width={half}
-    height={Math.round(height / 2)}
-    alt={alt}
-    loading={eager ? 'eager' : 'lazy'}
-    decoding={eager ? 'sync' : 'async'}
-    fetchpriority={eager ? 'high' : 'auto'}
-  />
+  {
+    videoSrc ? (
+      <video
+        class="shot-video"
+        src={videoSrc}
+        poster={poster}
+        width={half}
+        height={Math.round(height / 2)}
+        controls
+        preload="none"
+        playsinline
+        aria-label={alt}
+      />
+    ) : (
+      <img
+        src={poster}
+        srcset={`${poster} ${half}w, /product/${shot}.webp ${width}w`}
+        sizes={sizes}
+        width={half}
+        height={Math.round(height / 2)}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding={eager ? 'sync' : 'async'}
+        fetchpriority={eager ? 'high' : 'auto'}
+      />
+    )
+  }
   {caption && <figcaption>{caption}</figcaption>}
-  <button class="shot-zoom" type="button" aria-label={`Ampliar captura: ${alt}`} data-shot-zoom={`/product/${shot}.webp`} data-shot-alt={alt} data-shot-phone={String(phone)} hidden><Icon name="search" size={17} /></button>
+  {
+    !videoSrc && (
+      <button class="shot-zoom" type="button" aria-label={`Ampliar captura: ${alt}`} data-shot-zoom={`/product/${shot}.webp`} data-shot-alt={alt} data-shot-phone={String(phone)} hidden><Icon name="search" size={17} /></button>
+    )
+  }
 </figure>

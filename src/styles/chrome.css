@@ -393,22 +393,55 @@
   }
 }
 
-/* ---------- floating WhatsApp contact ---------- */
-.whatsapp-float {
+/* ---------- floating social + WhatsApp stack ---------- */
+.social-float {
   position: fixed;
   right: clamp(18px, 2.4vw, 34px);
   bottom: clamp(18px, 2.4vw, 34px);
   z-index: 70;
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.social-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(8, 32, 69, 0.26);
+  transition: transform var(--fast) var(--ease);
+  animation: social-in 0.5s var(--ease) both, social-pulse-ring 2.8s ease-out infinite;
+}
+
+.social-link svg { width: 24px; height: 24px; }
+.social-link:hover { transform: translateY(-3px) scale(1.05); }
+
+.social-tiktok { background: #000; animation-delay: 0s, 0.9s; }
+.social-instagram {
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%);
+  animation-delay: 0.08s, 1.1s;
+}
+.social-facebook { background: #1877f2; animation-delay: 0.16s, 1.3s; }
+
+.whatsapp-float {
+  position: relative;
+  display: flex;
   align-items: center;
   gap: 10px;
   color: #fff;
+  animation: social-in 0.5s var(--ease) 0.24s both;
 }
 
 .whatsapp-icon {
   position: relative;
-  width: 62px;
-  height: 62px;
+  width: 68px;
+  height: 68px;
   display: grid;
   place-items: center;
   border: 3px solid #fff;
@@ -460,7 +493,22 @@
   75%, 100% { opacity: 0; transform: scale(1.28); }
 }
 
+/* Entrance: the whole stack slides in from the side once, on load. */
+@keyframes social-in {
+  from { opacity: 0; transform: translateX(28px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* A lighter pulse ring than WhatsApp's, so the main CTA still reads as primary. */
+@keyframes social-pulse-ring {
+  0%, 60% { box-shadow: 0 10px 26px rgba(8, 32, 69, 0.26), 0 0 0 0 rgba(255, 255, 255, 0.35); }
+  80% { box-shadow: 0 10px 26px rgba(8, 32, 69, 0.26), 0 0 0 9px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 10px 26px rgba(8, 32, 69, 0.26), 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
 @media (max-width: 600px) {
+  /* Mobile keeps only WhatsApp in the corner; the social stack is a desktop extra. */
+  .social-link { display: none; }
   .whatsapp-icon { width: 56px; height: 56px; }
   .whatsapp-icon svg { width: 31px; height: 31px; }
   .whatsapp-label { display: none; }
@@ -468,5 +516,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .whatsapp-icon,
-  .whatsapp-icon::before { animation: none; }
+  .whatsapp-icon::before,
+  .social-link,
+  .whatsapp-float { animation: none; }
 }

@@ -93,10 +93,18 @@
   pointer-events: none;
 }
 
-.shot-phone img {
+.shot-phone img,
+.shot-phone .shot-video {
   width: 100%;
   border-radius: 38px;
   background: #f5f8ff;
+}
+
+.shot-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #0d1838;
 }
 
 .shot-bar {

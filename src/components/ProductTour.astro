@@ -18,7 +18,7 @@ const { roles } = Astro.props;
   <div class="container tour-heading"><p class="eyebrow">UN EQUIPO. TRES FORMAS DE AVANZAR.</p><h2>Cada persona,<br /><em>en su elemento.</em></h2><p>La misma información. La experiencia correcta. Nadie debería aprender a usar el sistema entero para hacer su parte. Cada rol entra a lo que necesita.</p></div>
   <div class="tour-runway" data-tour-runway>
     <div class="tour-sticky">
-      <div class="tour-orb" aria-hidden="true"></div><span class="tour-spark" aria-hidden="true">✳</span>
+      <div class="tour-orb" aria-hidden="true"></div>
       <div class="container tour-controls">
         <div class="tour-tabs" aria-label="Experiencias de Klassia" data-tour-tabs hidden>
           {roles.map((role, i) => <button type="button" id={`role-tab-${i}`} data-tour-tab aria-controls={`role-panel-${i}`}><span>0{i + 1}</span>{role.eyebrow}</button>)}

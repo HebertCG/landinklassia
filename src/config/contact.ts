@@ -6,3 +6,7 @@ const configuredUrl = import.meta.env.PUBLIC_WHATSAPP_URL?.trim();
 export const WHATSAPP_URL = configuredUrl?.startsWith('https://wa.me/')
   ? configuredUrl
   : DEFAULT_WHATSAPP_URL;
+
+export const TIKTOK_URL = 'https://www.tiktok.com/@devti_consultoria';
+export const INSTAGRAM_URL = 'https://www.instagram.com/consultoriadevti/';
+export const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595480393698';

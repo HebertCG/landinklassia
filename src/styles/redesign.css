@@ -64,7 +64,6 @@ h1, h2 { text-wrap: initial; }
 .tour-orb { position: absolute; width: 72vw; height: 72vw; left: -12vw; top: -8vw; border-radius: 45% 55% 55% 45%; z-index: -1; background: #d9fa68; transform: rotate(var(--tour-turn, -25deg)); transition: background .5s; }
 .product-tour[data-active='1'] .tour-orb { background: #b7a0eb; }
 .product-tour[data-active='2'] .tour-orb { background: #78d8f7; }
-.tour-spark { position: absolute; z-index: -1; right: -30px; bottom: 25px; color: #142e370b; font-size: 340px; line-height: 1; transform: rotate(var(--tour-turn, 0deg)); }
 .tour-controls { display: flex; justify-content: space-between; gap: 30px; align-items: center; margin-bottom: 45px; }
 .tour-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
 .tour-tabs button { background: transparent; border: 1px solid #142e3733; border-radius: 999px; padding: 12px 20px; display: flex; align-items: center; gap: 12px; font-size: .77rem; font-weight: 750; }
@@ -94,6 +93,22 @@ h1, h2 { text-wrap: initial; }
 .is-scroll-story .tour-sticky { position: sticky; top: 0; height: 100svh; display: flex; flex-direction: column; justify-content: center; padding-top: 120px; }
 .is-scroll-story .tour-progress { display: block; }
 .is-scroll-story .tour-scroll-label { display: inline; }
+/* Short real-footage demo, between the role tour and the module grid. */
+.demo-reel { padding-block: 85px 95px; background: #142e37; }
+.demo-reel-head { max-width: 640px; margin-inline: auto; text-align: center; display: grid; gap: 18px; }
+.demo-reel-head .eyebrow { color: #d9fa68; }
+.demo-reel-head h2 { font-size: clamp(2.6rem, 4.4vw, 4rem); line-height: 1.04; color: #f8f8ef; }
+.demo-reel-head h2 em { font-style: normal; color: #78d8f7; }
+.demo-reel-head p { color: #c7d6da; font-size: .92rem; }
+.demo-reel-media { max-width: 880px; margin: 45px auto 0; }
+.demo-reel-media .shot { border-radius: 18px; border: 6px solid #fffef5; box-shadow: 0 30px 70px #09161b4d; }
+.demo-reel-media .shot-video { border-radius: 12px; }
+@media (max-width: 700px) {
+  .demo-reel { padding-block: 60px 70px; }
+  .demo-reel-media { margin-top: 32px; }
+  .demo-reel-media .shot { border-width: 4px; }
+}
+
 /* Open rows replace the conventional feature-card grid. */
 .modules-section { padding-block: 120px; background: #f8f8ef; }
 .modules-heading { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 90px; margin-bottom: 60px; }
@@ -141,7 +156,8 @@ h1, h2 { text-wrap: initial; }
 .pocket-note { font-size: .7rem; margin-top: 35px; transform: rotate(-5deg); }
 .pocket-phone { position: relative; isolation: isolate; }
 .pocket-phone .shot-phone { width: 245px; margin-inline: auto; padding: 7px; border-radius: 36px; background: #142e37; transform: rotate(var(--phone-turn, -8deg)); box-shadow: 14px 18px 0 #72569530; }
-.pocket-phone .shot-phone img { border-radius: 33px; }
+.pocket-phone .shot-phone img,
+.pocket-phone .shot-phone .shot-video { border-radius: 33px; }
 .pocket-phone .shot-phone::before { width: 75px; height: 21px; top: 15px; }
 .pocket-disc { position: absolute; width: 120%; aspect-ratio: 1; top: 8%; left: -10%; background: #d8c8f3; border-radius: 48% 52% 42% 58%; z-index: -1; transform: rotate(var(--phone-turn, 15deg)); }
 .pocket-star { position: absolute; font-size: 105px; color: #d9fa68; top: 0; right: -35px; z-index: 2; transform: rotate(15deg); }
@@ -269,9 +285,8 @@ h1, h2 { text-wrap: initial; }
 .footer h2 { color: #9db8bf; }
 .footer-cta { background: #d9fa68; color: #142e37; font-size: .75rem; }
 .footer-cta:hover { background: #edffb2; }
-.whatsapp-icon { background: #18854b; width: 52px; height: 52px; animation: none; box-shadow: 0 7px 20px #142e3720; }
-.whatsapp-icon::before { display: none; }
-.whatsapp-icon svg { width: 28px; height: 28px; }
+.whatsapp-icon { background: #18854b; }
+.social-link:hover { box-shadow: 0 14px 30px #142e3730; }
 .cookie-banner { border-radius: 15px; padding: 18px 22px; }
 .cookie-actions .button, .cookie-dialog-actions .button { padding-inline: 18px; }
 @media (min-width: 980px) { .compare thead th { top: 100px; } }
@@ -320,7 +335,6 @@ h1, h2 { text-wrap: initial; }
  .tour-heading > p:last-child, .modules-heading > p:last-child { justify-self: start; font-size: .85rem; }
  .tour-sticky { padding-block: 35px 40px; }
  .tour-orb { width: 120vw; height: 120vw; left: -30vw; top: -10vw; }
- .tour-spark { display: none; }
  .tour-controls { margin-bottom: 35px; }
  .tour-tabs { width: 100%; gap: 4px; justify-content: space-between; }
  .tour-tabs button { flex: 1; padding: 10px 8px; min-height: 44px; justify-content: center; font-size: .67rem; gap: 5px; }

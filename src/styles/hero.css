@@ -13,9 +13,6 @@
 .orbit-word { position: absolute; z-index: 1; font-size: clamp(3rem, 7vw, 8rem); font-weight: 800; color: #188cb322; letter-spacing: -.07em; }
 .orbit-word-left { left: -4%; top: 50%; transform: rotate(-38deg); }
 .orbit-word-right { right: -8%; top: 53%; transform: rotate(38deg); }
-.scene-star { position: absolute; z-index: 3; line-height: 1; }
-.star-one { color: #ff947c; font-size: 100px; top: 0; left: 13%; transform: rotate(var(--decor-turn, 12deg)); }
-.star-two { color: #7255a1; font-size: 95px; top: 37%; right: 14%; }
 .hero-note { position: absolute; z-index: 3; left: 6%; top: 32%; transform: rotate(-8deg); display: flex; align-items: center; gap: 15px; font-size: .83rem; }
 .hand-arrow { font-size: 65px; font-weight: 300; transform: rotate(25deg); }
 .hero-note p { line-height: 1.5; }
@@ -40,8 +37,6 @@
  .hero-scene { padding: 55px 0 80px; margin-top: 15px; }
  .hero-illustration { width: 90%; }
  .hero-planet { width: 180%; left: -40%; top: 24%; }
- .star-one { font-size: 65px; left: 5%; }
- .star-two { font-size: 60px; right: 6%; top: 28%; }
  .hero-note { font-size: .7rem; left: 5%; top: 7%; }
  .hand-arrow { font-size: 45px; }
  .orbit-word { display: none; }
@@ -56,8 +51,6 @@
  .hero-illustration { width: 94%; }
  .hero-note { top: 2%; left: 7%; }
  .hero-planet { top: 27%; }
- .star-one { left: auto; right: 10%; font-size: 53px; top: 3%; }
- .star-two { display: none; }
  .hero-side-note { display: none; }
  .round-scroll { width: 60px; height: 60px; bottom: 13px; right: 5%; }
  .round-scroll span:first-child { font-size: .47rem; }
