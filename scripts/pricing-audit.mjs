@@ -73,14 +73,14 @@ try {
     await page.locator('input[value="incluido"]').press('ArrowDown');
     assert.equal(await page.locator('[data-config-total]').innerText(), 'S/324/mes');
   });
-  await check('Plus and combos show prices and coming soon without purchase controls', async () => {
+  await check('Plus and combos show prices and a working add-on contact link', async () => {
     const offers = page.locator('.plus-card, .combo-card');
     assert.equal(await offers.count(), 5);
     for (const [i, price] of [99, 45, 69, 129, 149].entries()) {
       const offer = offers.nth(i);
-      assert.equal(await offer.locator('.coming-soon').innerText(), 'Próximamente');
       assert.equal(await offer.locator('.plus-price strong').innerText(), `S/${price}`);
-      assert.equal(await offer.locator('a, button, input, select').count(), 0);
+      const contact = new URL(await offer.locator('.plus-choose').getAttribute('href'));
+      assert.equal(contact.hostname, 'wa.me');
       await offer.locator('summary').click();
       assert.equal(await offer.locator('details ul').isVisible(), true);
     }
@@ -91,7 +91,8 @@ try {
   await check('Home summary links preserve plan selection and navigation is active', async () => {
     await page.goto(baseURL);
     assert.equal(await page.locator('.pricing-preview .plan-card').count(), 4);
-    assert.equal(await page.locator('.pricing-preview .plan-ribbon').innerText(), 'Próximamente');
+    assert.equal(await page.locator('.pricing-preview .plan-ribbon').nth(1).innerText(), 'Próximamente');
+    assert.equal(await page.locator('.pricing-preview .plan-ribbon-active').innerText(), 'Más elegido');
     await page.locator('.pricing-preview').getByRole('link', { name: 'Elegir Profesional' }).click();
     await page.waitForURL('**/planes/?plan=profesional#configura');
     assert.equal(await page.locator('#config-plan').inputValue(), 'profesional');
@@ -105,11 +106,11 @@ try {
     assert.equal(await page.locator('[data-config-total]').innerText(), 'S/149/mes');
     assert.equal(await page.locator('#config-plan option[value="institucional"]').count(), 0);
   });
-  await check('Upcoming arrow navigates to the Plus section; old beta is removed', async () => {
+  await check('Plus arrow navigates to the Plus section; old beta is removed', async () => {
     await page.goto(`${baseURL}/planes/`);
-    await page.getByRole('link', { name: 'Conoce lo próximo que llegará a Klassia' }).click();
-    await page.waitForURL('**/planes/#proximamente');
-    assert.equal(await page.locator('#proximamente').evaluate(el => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; }), true);
+    await page.getByRole('link', { name: 'Conoce los servicios Plus' }).click();
+    await page.waitForURL('**/planes/#plus');
+    assert.equal(await page.locator('#plus').evaluate(el => { const r = el.getBoundingClientRect(); return r.top >= 0 && r.top < innerHeight; }), true);
     assert.equal(await page.getByText('Conoce Klassia en beta.', { exact: true }).count(), 0);
     assert.equal(await page.locator('[data-promotion] time').getAttribute('datetime'), '2026-12-31');
   });

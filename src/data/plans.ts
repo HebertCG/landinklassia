@@ -3,6 +3,8 @@ export interface Plan {
   name: string;
   price: number;
   comingSoon?: boolean;
+  /** Short ribbon label for an available plan, e.g. "Más elegido". Ignored when comingSoon is set. */
+  badge?: string;
   students: number;
   storageGB: number;
   description: string;
@@ -27,7 +29,7 @@ export const plans: Plan[] = [
     features: ['Evaluaciones y exámenes virtuales', 'Test vocacional', 'Personalización con logo y colores', 'Importación masiva de alumnos', 'Exportación de información']
   },
   {
-    id: 'profesional', name: 'Profesional', price: 499, students: 500, storageGB: 500,
+    id: 'profesional', name: 'Profesional', price: 499, badge: 'Más elegido', students: 500, storageGB: 500,
     description: 'Las herramientas de Básico, con más capacidad.', tone: 'violet', inherits: 'Básico',
     highlights: ['Todas las funciones de Básico', 'Importación masiva y exportación', 'Más alumnos y espacio para crecer'],
     features: ['Las mismas funciones del Plan Básico', 'Capacidad para hasta 500 alumnos activos', '500 GB de almacenamiento']
