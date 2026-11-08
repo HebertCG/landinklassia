@@ -76,7 +76,7 @@ try {
   await check('Plus and combos show prices and a working add-on contact link', async () => {
     const offers = page.locator('.plus-card, .combo-card');
     assert.equal(await offers.count(), 5);
-    for (const [i, price] of [99, 45, 69, 129, 149].entries()) {
+    for (const [i, price] of [35, 45, 69, 75, 99].entries()) {
       const offer = offers.nth(i);
       assert.equal(await offer.locator('.plus-price strong').innerText(), `S/${price}`);
       const contact = new URL(await offer.locator('.plus-choose').getAttribute('href'));
@@ -84,7 +84,7 @@ try {
       await offer.locator('summary').click();
       assert.equal(await offer.locator('details ul').isVisible(), true);
     }
-    assert.deepEqual(await page.locator('.combo-saving').allInnerTexts(), ['Ahorra S/15/mes', 'Ahorra S/19/mes']);
+    assert.deepEqual(await page.locator('.combo-saving').allInnerTexts(), ['Ahorra S/5/mes', 'Ahorra S/5/mes']);
     assert.equal(await page.getByText('El precio se mantiene si el proveedor cuesta hasta S/99 por academia.', { exact: true }).count(), 0);
     assert.equal(await page.getByText('Las comisiones bancarias o de pasarela no están incluidas.', { exact: true }).isVisible(), true);
   });

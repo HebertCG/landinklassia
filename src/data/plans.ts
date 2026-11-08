@@ -58,8 +58,8 @@ interface UpcomingService {
 }
 
 export const plusServices: UpcomingService[] = [
-  { name: 'Cobros Automáticos', price: 99, subtitle: 'Cobranza recurrente y seguimiento de pagos.',
-    features: ['Generación automática de cuotas', 'Programación de cobros recurrentes', 'Recordatorios antes del vencimiento', 'Avisos automáticos de deuda', 'Actualización del estado de pago', 'Seguimiento de pagos pendientes', 'Reportes de recaudación', 'Reportes de morosidad', 'Integración con Cobrana', 'Costos mensuales de Cobrana incluidos'],
+  { name: 'Cobros Automáticos', price: 35, subtitle: 'Cobranza recurrente con Mercado Pago.',
+    features: ['Generación automática de cuotas', 'Programación de cobros recurrentes', 'Recordatorios antes del vencimiento', 'Avisos automáticos de deuda', 'Actualización del estado de pago', 'Seguimiento de pagos pendientes', 'Reportes de recaudación', 'Reportes de morosidad', 'Integración con Mercado Pago', 'Costos mensuales de Mercado Pago incluidos'],
     conditions: ['Las comisiones bancarias o de pasarela no están incluidas.', 'Las comisiones se trasladan a la academia o al alumno.'] },
   { name: 'Facturación Electrónica PSE 500', price: 45, subtitle: 'Hasta 500 comprobantes mensuales.',
     features: ['Emisión de boletas electrónicas', 'Emisión de facturas electrónicas', 'Envío automático a SUNAT', 'Generación de PDF y XML', 'Recepción y almacenamiento del CDR', 'Consulta del estado en SUNAT', 'Emisión de notas de crédito', 'Historial de comprobantes', 'Reportes de facturación'],
@@ -70,9 +70,9 @@ export const plusServices: UpcomingService[] = [
 ];
 
 export const combos = [
-  { name: 'Finanzas 500', price: 129, saving: 15,
+  { name: 'Finanzas 500', price: 75, saving: 5,
     features: ['Cobros automáticos', 'Hasta 500 comprobantes electrónicos', 'Recordatorios de pago', 'Seguimiento de morosidad', 'Boletas y facturas electrónicas', 'Envío automático a SUNAT', 'Reportes de cobranza y facturación'] },
-  { name: 'Finanzas 1,000', price: 149, saving: 19,
+  { name: 'Finanzas 1,000', price: 99, saving: 5,
     features: ['Cobros automáticos', 'Hasta 1,000 comprobantes electrónicos', 'Todo lo incluido en el Combo Finanzas 500', 'Recomendado para el Plan Profesional'] }
 ];
 
