@@ -84,6 +84,26 @@ confirma que el dominio canónico coincida con el valor `site` de `astro.config.
 
 ## Google Search Console
 
+### Imagen al compartir
+
+La tarjeta predeterminada de Open Graph y Twitter es `public/brand/klassia-social-hero-v1.jpg`
+(1200 × 630 px, JPEG). Usa el logo, el titular y la ilustración del hero, con fondo sólido.
+El mismo recurso se declara como imagen principal en JSON-LD. Nosotros y Planes conservan
+sus imágenes propias, con dimensiones y tipo correctos.
+
+Para editar la tarjeta, cambia `scripts/social-preview.html` y ejecuta
+`node scripts/generate-social-preview.mjs`. Usa el Microsoft Edge local en modo headless;
+`UI_AUDIT_BROWSER` permite seleccionar otro canal instalado. El JPEG se guarda en el repositorio:
+el build no necesita abrir un navegador. Al reemplazar una tarjeta ya publicada, incrementa
+la versión de su nombre y actualiza el layout, el generador y la auditoría SEO.
+
+`npm run audit:seo` comprueba que las imágenes existen en el build y que Open Graph, Twitter
+y JSON-LD coinciden. Tras desplegar, los servicios pueden conservar vistas previas anteriores
+en caché; Google debe rastrear de nuevo la página y puede elegir otra miniatura. La solicitud
+de indexación en Search Console no garantiza una imagen concreta ni una actualización inmediata.
+
+### Indexación
+
 Cuando `https://klassia.lat/` ya muestre esta landing en producción:
 
 1. Crea una propiedad de tipo **Dominio** para `klassia.lat` en Google Search Console.

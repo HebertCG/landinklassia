@@ -36,6 +36,28 @@ for (const file of pages) {
   const lang = capture(html, /<html lang="([^"]+)"/i);
   const h1Count = (html.match(/<h1(?:\s|>)/gi) ?? []).length;
   const schemaText = capture(html, /<script type="application\/ld\+json">(.*?)<\/script>/is);
+  const socialImage = capture(html, /<meta property="og:image" content="([^"]+)"/i);
+  const socialWidth = Number(capture(html, /<meta property="og:image:width" content="([^"]+)"/i));
+  const socialHeight = Number(capture(html, /<meta property="og:image:height" content="([^"]+)"/i));
+  const socialType = capture(html, /<meta property="og:image:type" content="([^"]+)"/i);
+  const socialAlt = capture(html, /<meta property="og:image:alt" content="([^"]+)"/i);
+
+  if (!socialImage.startsWith('https://klassia.lat/')) {
+    fail(page, 'og:image debe ser una URL HTTPS absoluta del sitio');
+  } else {
+    const imagePath = new URL(socialImage).pathname;
+    if (!existsSync(join(dist, imagePath.slice(1)))) fail(page, `imagen social ausente: ${imagePath}`);
+    const expectedType = imagePath.endsWith('.jpg') ? 'image/jpeg' : imagePath.endsWith('.webp') ? 'image/webp' : '';
+    if (!expectedType || socialType !== expectedType) fail(page, 'tipo de imagen social incorrecto');
+  }
+  if (!(socialWidth > 0 && socialHeight > 0)) fail(page, 'dimensiones de imagen social ausentes o inválidas');
+  if (!socialAlt) fail(page, 'falta texto alternativo de imagen social');
+  if (capture(html, /<meta name="twitter:image" content="([^"]+)"/i) !== socialImage) {
+    fail(page, 'Twitter y Open Graph deben apuntar a la misma imagen');
+  }
+  if (page === '/' && socialImage !== 'https://klassia.lat/brand/klassia-social-hero-v1.jpg') {
+    fail(page, 'Inicio debe compartir la tarjeta del hero de Klassia');
+  }
 
   if (!title) fail(page, 'falta <title>');
   if (!description) fail(page, 'falta meta description');
@@ -54,6 +76,10 @@ for (const file of pages) {
   try {
     const schema = JSON.parse(schemaText);
     const types = schema['@graph'].flatMap((node) => node['@type']);
+    const primaryImage = schema['@graph'].find((node) => ['WebPage', 'AboutPage'].includes(node['@type']))?.primaryImageOfPage;
+    if (primaryImage?.url !== socialImage || primaryImage?.contentUrl !== socialImage || primaryImage?.width !== socialWidth || primaryImage?.height !== socialHeight) {
+      fail(page, 'la imagen principal en JSON-LD no coincide con Open Graph');
+    }
     if (!types.includes('WebPage') && !types.includes('AboutPage')) fail(page, 'falta WebPage en JSON-LD');
     if (page === '/' && (!types.includes('Organization') || !types.includes('WebSite') || !types.includes('SoftwareApplication'))) {
       fail(page, 'faltan entidades principales en JSON-LD');

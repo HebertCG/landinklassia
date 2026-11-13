@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es-PE">
+  <head>
+    <meta charset="utf-8" />
+    <title>Vista previa de Klassia</title>
+    <style>
+      @font-face {
+        font-family: Manrope;
+        src: url('../public/brand/manrope-latin.woff2') format('woff2');
+        font-weight: 200 800;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; width: 1200px; height: 630px; overflow: hidden; background: #f8f8ef; color: #142c38; font-family: Manrope, sans-serif; }
+      main { position: relative; width: 100%; height: 100%; isolation: isolate; padding: 48px 56px; }
+      .planet { position: absolute; z-index: -1; width: 850px; height: 850px; border-radius: 50%; background: #78d8f7; left: 650px; top: -60px; }
+      .logo { width: 196px; height: 56px; }
+      .eyebrow { margin: 50px 0 22px; font-size: 15px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
+      h1 { margin: 0; font-size: 68px; font-weight: 750; letter-spacing: -4px; line-height: 1.05; }
+      h1 span { color: #087a9e; }
+      .description { margin: 25px 0 0; width: 490px; font-size: 23px; line-height: 1.5; color: #445d62; }
+      .art { position: absolute; width: 610px; height: auto; right: -5px; top: 150px; }
+      footer { position: absolute; bottom: 43px; left: 56px; right: 56px; display: flex; align-items: center; justify-content: space-between; font-size: 18px; font-weight: 800; }
+      .tag { padding: 13px 21px; border-radius: 30px; background: #d9fa68; font-size: 16px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="planet"></div>
+      <img class="logo" src="../public/brand/klassia-logo.svg" alt="Klassia" />
+      <p class="eyebrow">Para academias preuniversitarias</p>
+      <h1>Tu academia,<br /><span>del papel<br />a lo digital.</span></h1>
+      <p class="description">Tu sistema académico,<br />finalmente conectado.</p>
+      <img class="art" src="../public/brand/klassia-learning-scene.webp" alt="Estudiantes y docente colaborando alrededor de una laptop" />
+      <footer><span>klassia.lat</span><span class="tag">Una sola plataforma. Todo conectado.</span></footer>
+    </main>
+  </body>
+</html>
